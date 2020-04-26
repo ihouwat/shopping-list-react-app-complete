@@ -100,7 +100,7 @@ app.put('/additem', (req, res) => {
 
 // Complete item from grocery list
 app.put('/completeitem', (req, res) => {
-  completedItem = {name: "Oranges", note: 'The note', id: 1}
+  completedItem = {name: "Oranges", note: 'The note', id: 15}
   // Push item to completed items list
   db.completeditems.push(completedItem)
   // Filter item out of items list
@@ -109,12 +109,22 @@ app.put('/completeitem', (req, res) => {
   // Find item index in groceriesTemplate array
   const templateIndex = db.groceriesTemplate.findIndex(item => item.name === completedItem.name)
   // Increment count of item in groceries Template array (useful for loading favorites)
-  db.groceriesTemplate[templateIndex].count ++
-  console.log(db.groceriesTemplate)
-    res.json({
-      items: db.items,
-      completeditems: db.completeditems,
+  if(templateIndex !== -1) {
+    console.log('in grocery list')
+    db.groceriesTemplate[templateIndex].count ++
+  } else {
+    console.log('not in grocery list')
+    // If item not in groceriesTemplate, push it and increment count to 1
+    db.groceriesTemplate.push({
+      name: completedItem.name,
+      count: 1,
     })
+  }
+  console.log(db.groceriesTemplate)
+  res.json({
+    items: db.items,
+    completeditems: db.completeditems,
+  })
 });
 
 app.put('/deleteitem', (req, res) => {
@@ -188,5 +198,4 @@ app.listen(port, () => console.log(`app is running http://localhost:${port}`))
 /DONE Recover item --> DELETE = from completed items & PUT items
 /DONE Add note --> Add note on modal in items list
 /DONE Delete all items --> Delete all items from completed list
-/DONE Recover all items --> Recover all items from completed list to items list
-/Check favorite item --> PUT change isChecked to true */
+/DONE Recover all items --> Recover all items from completed list to items list */
