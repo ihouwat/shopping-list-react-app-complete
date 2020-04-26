@@ -1,0 +1,9 @@
+.Modal-dimensions {
+  overflow: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .Modal-dimensions {
+    height: 50vh;
+  }  
+}
