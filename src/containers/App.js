@@ -89,23 +89,7 @@ class App extends Component {
       body: JSON.stringify({name: item})
     })
     .then(response => response.json())
-    .then(response => this.setState({items: this.state.items.concat(response)}))
-  }
-
-  // Helper method to search for item in a list method - returns the object index
- searchForItemInList = (item, list) => {
-   // Determine which list to search, items or completedItems
-    if(list === 'items') {
-      var searchList = this.state.items;
-    } else {
-      searchList = this.state.completedItems;
-    }
-    // Search list and return match at index
-    for(var i=0; i < searchList.length; i++){
-      if (searchList[i].name === item.name){
-        return searchList.indexOf(searchList[i])
-      }
-    } return
+    .then(response => this.setState({items: response}))
   }
 
   // Helper method to remove item from list
@@ -218,45 +202,71 @@ class App extends Component {
     })
     .then(response => response.json())
     .then(response => {
-      this.removeFromList('items', this.searchForItemInList(response, 'items'))
-      this.setState({completedItems: this.state.completedItems.concat(response)})
-    }); 
+      this.setState({
+        items: response.items,
+        completedItems: response.completedItems
+      })
+    })
   }
 
   // Fully delete item from whichever list it is in 
-  onDeleteItem = (deletedItem, list) => {
+  onDeleteItem = (deletedItem, listName) => {
     fetch('http://localhost:3000/deleteitem', {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         item: deletedItem,
-        list: list
+        listName: listName
       })
     })
       .then(response => response.json())
-      .then(response => 
-        this.removeFromList(response.list, this.searchForItemInList(response.item, response.list))
-      )
+      .then(response => {
+        response.listName === 'items' ? this.setState({items: response.updatedList})
+        : this.setState({completedItems: response.updatedList})
+        }) 
   }
 
   // Readd item from completed list to grocery list
-  onRecoverItem = (item, list) => {
-    this.removeFromList(list, this.searchForItemInList(item, list))
-    this.addToList(item)
+  onRecoverItem = (item) => {
+    fetch('http://localhost:3000/recoveritem',{
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        item: item,
+      })
+    })
+    .then(response => response.json())
+    .then(response => 
+      this.setState({
+        items: response.items,
+        completedItems: response.completedItems,
+      })
+    )
   }
 
   // Remove all completed items from completed List
   onDeleteAllCompleted = () => {
-    this.setState({completedItems: []})
+    fetch('http://localhost:3000/deleteallcompleted',{
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+    })
+    .then(response => response.json())
+    .then(response => this.setState({completedItems: response}))
   }
 
     // Readd all completed items to grocery list
   onRecoverAllCompleted = () => {
-    const completedList = this.state.completedItems;
-    let newItems = [...this.state.items];
-    newItems = newItems.concat(completedList);
-    this.setState({ items: newItems });
-    this.setState({completedItems: []})
+    fetch('http://localhost:3000/recoverallcompleted',{
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+    })
+      .then(response => response.json())
+      .then(response => 
+        this.setState({
+          items: response.items,
+          completedItems: response.completedItems,
+        })
+      )
   }
 
    // Modal open method for grocery list component
@@ -277,19 +287,19 @@ class App extends Component {
    };
  
     // Modal close method for grocery list component
-    // Saves note to state
+    // Saves note to database
    modalClose = () => {
-    for(var i=0; i < this.state.items.length; i++){
-      if (this.state.items[i].name === this.state.modalItemName){
-        var stateCopy = Object.assign({}, this.state);
-        stateCopy.items = stateCopy.items.slice();
-        stateCopy.items[i] = Object.assign({}, stateCopy.items[i]);
-        stateCopy.items[i].note = this.state.itemNotes;
-        this.setState(stateCopy);
-        this.setState({itemNotes: ''})
-      }
-    }
-    this.setState({modalIsOpen: false}); // Close modal
+    fetch('http://localhost:3000/addnote',{
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        itemName: this.state.modalItemName,
+        note: this.state.itemNotes,
+      })
+    })
+    .then(response => response.json())
+    .then(response => this.setState({items: response.items}))
+    .then(this.setState({modalIsOpen: false})); // Close modal
   };
 
   // Category menu handle to change category or grocery store

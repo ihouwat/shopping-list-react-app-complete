@@ -73,113 +73,149 @@ app.use(sortedFaves)
 
 // Get lists
 app.get('/', (req, res) => {
-  res.send({
-    topTenFavorites: req.topTenFavorites,
-    items: db.items,
-    completedItems: db.completedItems,
-  })
+  try {
+    res.send({
+      topTenFavorites: req.topTenFavorites,
+      items: db.items,
+      completedItems: db.completedItems,
+    })
+  }
+  catch (err) {
+    res.status(400).json('could not GET lists');
+  }
 });
 
 // Add item to grocery list
 app.put('/additem', (req, res) => {
   item = req.body
-  db.items.push({
+  try {
+    db.items.push({
     name: item.name,
     note: '',
     id: Math.random().toString(36).substr(2, 9), // unique ID
-  })
-  newItem = db.items[db.items.length - 1]
-  res.json({
-    name: newItem.name,
-    note: newItem.note,
-    id: newItem.id
-  })
+    })
+    res.json(db.items)
+  }
+  catch(err) {
+    res.status(400).json('could not add item');
+  }
 });
 
 // Complete item from grocery list
 app.put('/completeitem', (req, res) => {
   item = req.body.item
   itemName = req.body.item.name
-  // Push item to completed items list
-  db.completedItems.push(item)
-  // Filter item out of items list
-  db.items.splice(db.items.findIndex(item => item.name === itemName), 1)
-  // Find item index in groceriesTemplate array
-  const templateIndex = db.groceriesTemplate.findIndex(item => item.name === itemName)
-  // Increment count of item in groceries Template array (useful for loading favorites)
-  if(templateIndex !== -1) {
-    console.log('in grocery list')
-    db.groceriesTemplate[templateIndex].count ++
-  } else {
-    console.log('not in grocery list')
-    // If item not in groceriesTemplate, push it and increment count to 1
-    db.groceriesTemplate.push({
-      name: item.name,
-      count: 1,
+  try {
+    // Push item to completed items list
+    db.completedItems.push(item)
+    // Filter item out of items list
+    db.items.splice(db.items.findIndex(item => item.name === itemName), 1)
+    // Find item index in groceriesTemplate array
+    const templateIndex = db.groceriesTemplate.findIndex(item => item.name === itemName)
+    // Increment count of item in groceries Template array (useful for loading favorites)
+    if(templateIndex !== -1) {
+      console.log('in grocery list')
+      db.groceriesTemplate[templateIndex].count ++
+    } else {
+      console.log('not in grocery list')
+      // If item not in groceriesTemplate, push it and increment count to 1
+      db.groceriesTemplate.push({
+        name: item.name,
+        count: 1,
+      })
+    }
+    console.log(db.groceriesTemplate)
+    res.json({
+      items: db.items,
+      completedItems: db.completedItems,
     })
   }
-  console.log(db.groceriesTemplate)
-  res.json({
-    name: item.name,
-    note: item.note,
-    id: item.id
-  })
+  catch(err) {
+    res.status(400).json('could not complete getting item');
+  }
 });
 
 // Delete item from list
 app.put('/deleteitem', (req, res) => {
   item = req.body.item
-  list = req.body.list
-  list === 'items' ? dbList = db.items : dbList = db.completedItems
-  dbList.splice(dbList.findIndex(item => item.name === item.name), 1)
-  res.json({
-    item: item,
-    list: list
-  })
+  itemName = item.name
+  try {
+    listName = req.body.listName
+    listName === 'items' ? dbList = db.items : dbList = db.completedItems
+    dbList.splice(dbList.findIndex(item => item.name === itemName), 1)
+    res.json({
+      listName: listName,
+      updatedList: dbList,
+    })
+  }
+  catch (err) {
+    res.status(400).json('could not delete item');
+  }
 })
 
 // Recover item from completed list to grocery list
 app.put('/recoveritem', (req, res) => {
-  recoveredItem = {name: "Ice Cream", note: 'Rocky Road flavor', id: 10}
-  db.items.push(recoveredItem)
-  const updatedList = db.completedItems.filter(item => item.name !== recoveredItem.name)
-  db.completedItems = updatedList
-  res.json({
-    items: db.items,
-    completedItems: db.completedItems,
-  })
-})
-
-// Add note to grocery item
-app.put('/addnote', (req, res) => {
-  modalItemName = 'Flax Seed'
-  itemNotes = 'Get the large one'
-  //Find index of item in grocery list
-  const findIndex = db.items.findIndex(item => item.name === modalItemName)
-  db.items[findIndex].note = itemNotes
-  res.json({
-    items: db.items,
-  })
+  item = req.body.item
+  itemName = req.body.item.name
+  try {
+    // Readd item to grocery list
+    db.items.push(item)
+    // Remove item from completed list
+    db.completedItems.splice(db.completedItems.findIndex(item => item.name === itemName), 1)
+    res.json({
+      items: db.items,
+      completedItems: db.completedItems,
+    })
+  }
+  catch(error) {
+    res.status(400).json('could not recover item');
+  }
 })
 
 // Delete all the completed items
 app.put('/deleteallcompleted', (req, res) => {
   db.completedItems = []
-  res.json({
-    completedItems: db.completedItems
-  })
+  try {
+    res.json(db.completedItems)
+  }
+  catch(err) {
+    res.status(400).json('could not delete all completed items');
+  }
 })
 
 // Recover all the completed items back to groceyr list
 app.put('/recoverallcompleted', (req, res) => {
-  // Push all completed items back to items list
-  db.completedItems.forEach(item => db.items.push(item))
-  // Empty completed items list
-  db.completedItems = []
-  res.json({
-    items: db.items,
-    completedItems: db.completedItems
-  })
+  try {
+    // Push all completed items back to items list
+    db.completedItems.forEach(item => db.items.push(item))
+    // Empty completed items list
+    db.completedItems = []
+    res.json({
+      items: db.items,
+      completedItems: db.completedItems
+    })
+  }
+  catch(error) {
+    res.status(400).json('could not recover all completed items')
+  }
+})
+
+
+// Add note to grocery item on modal close
+app.put('/addnote', (req, res) => {
+  ItemName = req.body.itemName
+  note = req.body.note
+  try {
+    //Find index of item in grocery list
+    const itemIndex = db.items.findIndex(item => item.name === ItemName)
+    db.items[itemIndex].note = note
+    res.json({
+      items: db.items,
+    })
+  }
+  catch(error) {
+    res.status(400).json('could not add note to item')
+  }
 })
 
 app.listen(port, () => console.log(`app is running http://localhost:${port}`))
@@ -189,8 +225,10 @@ app.listen(port, () => console.log(`app is running http://localhost:${port}`))
 /DONE Add item --> PUT = grocery
 /DONE Complete item -->  DELETE = from items & PUT completed items, PUT item count increased
 /DONE Delete item --> DELETE = from list
+/DONE Delete all items --> Delete all items from completed list
+/DONE Recover item --> DELETE = from completed items & PUT items
+/DONE Recover all items --> Recover all items from completed list to items list 
+/DONE Add note --> Add note on modal in items list
 
-/ Recover item --> DELETE = from completed items & PUT items
-/ Add note --> Add note on modal in items list
-/ Delete all items --> Delete all items from completed list
-/ Recover all items --> Recover all items from completed list to items list */
+/ Fetch item on modal open
+*/

@@ -21,7 +21,6 @@ class GroceryLists extends Component {
       // The snackbar is always fired
       return
     } else if (uncategorizedItem !== undefined && prevProps.items !== this.props.items && uncategorizedItem.activatedSnackbarOnce === true) {
-      console.log(prevProps.itemNotes)
       this.fireUncategorizedSnackbar()
     } 
   }
