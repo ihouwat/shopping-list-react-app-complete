@@ -57,7 +57,6 @@ const CategorizedListItems = ({ category, modalItemName, itemNotes, groceryItems
 
   // Helper method to search Grocery Store template array for item
   const searchGroceryStoreTemplate = (store, grocery) => {
-    
     for (const storeCategory of store) {
       for (let i=0; i<storeCategory.items.length; i++) {
         if (storeCategory.items[i] && grocery && storeCategory.items[i].toLowerCase() === grocery.name.toLowerCase()) {

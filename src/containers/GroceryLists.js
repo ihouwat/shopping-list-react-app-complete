@@ -20,7 +20,7 @@ class GroceryLists extends Component {
       // Fixes a bug where if the last item added to the grocery list is uncategorized
       // The snackbar is always fired
       return
-    } else if (prevProps.items !== this.props.items && uncategorizedItem.activatedSnackbarOnce === true) {
+    } else if (uncategorizedItem !== undefined && prevProps.items !== this.props.items && uncategorizedItem.activatedSnackbarOnce === true) {
       console.log(prevProps.itemNotes)
       this.fireUncategorizedSnackbar()
     } 

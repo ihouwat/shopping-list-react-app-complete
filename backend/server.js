@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser')
+const cors = require('cors');
 
 const db =  {
   groceriesTemplate: [
@@ -22,21 +23,15 @@ const db =  {
     { name: 'Flax Seed', count: 5 },
     { name: 'Grapes', count: 5 },
   ], 
-  items: [
-    {name: "Apples", note: 'The note', id: 0},
-    {name: "Oranges", note: 'The note', id: 1},
-    { name: 'Flax Seed', note: 'The note', id: 2},
-  ],
-  completeditems: [
-    {name: "Bananas", note: 'The note is here', id: 1},
-    {name: "Ice Cream", note: 'Rocky Road flavor', id: 10},
-  ],
+  items: [],
+  completedItems: [],
 }
 
 
 
 // Start app
 const app = express();
+app.use(cors()); 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 const port = 3000;
@@ -78,36 +73,39 @@ app.use(sortedFaves)
 
 // Get lists
 app.get('/', (req, res) => {
-  res.json({
+  res.send({
     topTenFavorites: req.topTenFavorites,
     items: db.items,
-    completeditems: db.completeditems,
+    completedItems: db.completedItems,
   })
 });
 
 // Add item to grocery list
 app.put('/additem', (req, res) => {
+  item = req.body
   db.items.push({
-    name: "Oatmeal",
-    note: "Don't get quick oatmeal",
+    name: item.name,
+    note: '',
     id: Math.random().toString(36).substr(2, 9), // unique ID
   })
-  console.log('newItem', db.items[db.items.length - 1])
+  newItem = db.items[db.items.length - 1]
   res.json({
-    items: db.items,
+    name: newItem.name,
+    note: newItem.note,
+    id: newItem.id
   })
 });
 
 // Complete item from grocery list
 app.put('/completeitem', (req, res) => {
-  completedItem = {name: "Oranges", note: 'The note', id: 15}
+  item = req.body.item
+  itemName = req.body.item.name
   // Push item to completed items list
-  db.completeditems.push(completedItem)
+  db.completedItems.push(item)
   // Filter item out of items list
-  const findListIndex = db.items.findIndex(item => item.name === completedItem.name)
-  db.items.splice(findListIndex, 1)
+  db.items.splice(db.items.findIndex(item => item.name === itemName), 1)
   // Find item index in groceriesTemplate array
-  const templateIndex = db.groceriesTemplate.findIndex(item => item.name === completedItem.name)
+  const templateIndex = db.groceriesTemplate.findIndex(item => item.name === itemName)
   // Increment count of item in groceries Template array (useful for loading favorites)
   if(templateIndex !== -1) {
     console.log('in grocery list')
@@ -116,49 +114,43 @@ app.put('/completeitem', (req, res) => {
     console.log('not in grocery list')
     // If item not in groceriesTemplate, push it and increment count to 1
     db.groceriesTemplate.push({
-      name: completedItem.name,
+      name: item.name,
       count: 1,
     })
   }
   console.log(db.groceriesTemplate)
   res.json({
-    items: db.items,
-    completeditems: db.completeditems,
+    name: item.name,
+    note: item.note,
+    id: item.id
   })
 });
 
+// Delete item from list
 app.put('/deleteitem', (req, res) => {
-  deletedItem = {name: "Oranges", note: 'The note', id: 1}
-  deletedItemList = 'items'
-  // deletedItem2 = {name: "Bananas", note: 'The note is here', id: 1},
-  // deletedItemList = 'completeditems'
-  list = ''
-  deletedItemList === 'items' ? list = db.items : list = db.completeditems
-  findIndex = list.findIndex(item => item.name === deletedItem.name)
-  list.splice(findIndex, 1)
-  if (list === db.items) {
-    db.items = list
-    res.json({
-      items: list,
-    })
-  } else {
-    res.json({
-      completeditems: list,
-    })
-  }
-})
-
-app.put('/recoveritem', (req, res) => {
-  recoveredItem = {name: "Ice Cream", note: 'Rocky Road flavor', id: 10}
-  db.items.push(recoveredItem)
-  const updatedList = db.completeditems.filter(item => item.name !== recoveredItem.name)
-  db.completeditems = updatedList
+  item = req.body.item
+  list = req.body.list
+  list === 'items' ? dbList = db.items : dbList = db.completedItems
+  dbList.splice(dbList.findIndex(item => item.name === item.name), 1)
   res.json({
-    items: db.items,
-    completeditems: db.completeditems,
+    item: item,
+    list: list
   })
 })
 
+// Recover item from completed list to grocery list
+app.put('/recoveritem', (req, res) => {
+  recoveredItem = {name: "Ice Cream", note: 'Rocky Road flavor', id: 10}
+  db.items.push(recoveredItem)
+  const updatedList = db.completedItems.filter(item => item.name !== recoveredItem.name)
+  db.completedItems = updatedList
+  res.json({
+    items: db.items,
+    completedItems: db.completedItems,
+  })
+})
+
+// Add note to grocery item
 app.put('/addnote', (req, res) => {
   modalItemName = 'Flax Seed'
   itemNotes = 'Get the large one'
@@ -170,21 +162,23 @@ app.put('/addnote', (req, res) => {
   })
 })
 
+// Delete all the completed items
 app.put('/deleteallcompleted', (req, res) => {
-  db.completeditems = []
+  db.completedItems = []
   res.json({
-    completeditems: db.completeditems
+    completedItems: db.completedItems
   })
 })
 
+// Recover all the completed items back to groceyr list
 app.put('/recoverallcompleted', (req, res) => {
   // Push all completed items back to items list
-  db.completeditems.forEach(item => db.items.push(item))
+  db.completedItems.forEach(item => db.items.push(item))
   // Empty completed items list
-  db.completeditems = []
+  db.completedItems = []
   res.json({
     items: db.items,
-    completeditems: db.completeditems
+    completedItems: db.completedItems
   })
 })
 
@@ -195,7 +189,8 @@ app.listen(port, () => console.log(`app is running http://localhost:${port}`))
 /DONE Add item --> PUT = grocery
 /DONE Complete item -->  DELETE = from items & PUT completed items, PUT item count increased
 /DONE Delete item --> DELETE = from list
-/DONE Recover item --> DELETE = from completed items & PUT items
-/DONE Add note --> Add note on modal in items list
-/DONE Delete all items --> Delete all items from completed list
-/DONE Recover all items --> Recover all items from completed list to items list */
+
+/ Recover item --> DELETE = from completed items & PUT items
+/ Add note --> Add note on modal in items list
+/ Delete all items --> Delete all items from completed list
+/ Recover all items --> Recover all items from completed list to items list */

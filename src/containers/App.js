@@ -11,7 +11,6 @@ import TopNavigationCategoryDisplay from '../components/TopNavigationCategoryDis
 import TopNavigationFaves from '../components/TopNavigationFaves';
 import FixedScroll from '../components/FixedScroll';
 import ErrorBoundary from '../components/ErrorBoundary';
-import groceriesTemplate from '../constants/groceriesTemplate';
 // Import Material Design UI Custom Theme API
 import {  Box } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -70,41 +69,27 @@ class App extends Component {
   }
 
   // Methods
-  // On mount, take sorted grocery list from database and populate this.state.favoriteItems
+  // On mount, get items, completed items, and top ten favorite items
   componentDidMount () {
-    //Helper method to sort groceries by count
-    let sortFavorites = (a, b) => {
-      const itemA = a.count;
-      const itemB = b.count;
-      let comparison = 0;
-      if (itemA < itemB) {
-        comparison = 1;
-      } else if (itemA > itemB) {
-        comparison = -1;
-      }
-      return comparison
-    }
-    // Get top ten grocery items by count.
-    // Count number is historical record of how many times each item has been bought
-    const topTenFavorites = groceriesTemplate.sort(sortFavorites).slice(0,10)
-    // Create a new array
-    const favoritesState = []
-    // For each topTen, create an object and push into favoritesState
-    for (let index in topTenFavorites){
-      favoritesState.push({
-        // Grocery name
-        name: topTenFavorites[index].name,
-        // isChecked is false, when it is checked in TopNavigationFaves, it becomes tru
-        isChecked: false,
-      });
-    }
-    this.setState({favoriteItems: favoritesState});
+    fetch('http://localhost:3000/')
+    .then(response => response.json())
+    .then(response => 
+      this.setState({
+        items: response.items,
+        completedItems: response.completedItems,
+        favoriteItems: response.topTenFavorites,
+      }))
   }
 
   // Generic add grocery method
   addToList = (item) => {
-    // Add item to list
-    this.setState({items: this.state.items.concat(item)})
+    fetch('http://localhost:3000/additem', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name: item})
+    })
+    .then(response => response.json())
+    .then(response => this.setState({items: this.state.items.concat(response)}))
   }
 
   // Helper method to search for item in a list method - returns the object index
@@ -150,13 +135,8 @@ class App extends Component {
     } else if (value === null ) {
       return
     }
-    const newItem = {
-      'name': value,
-      'note': '',
-      'id': Math.random().toString(36).substr(2, 9), // unique ID
-    }
     //Add selected value to list
-    this.addToList(newItem)
+    this.addToList(value)
     //Empty form
     this.setState({formField: ''})
   } 
@@ -214,12 +194,7 @@ class App extends Component {
     favoriteItems.forEach(item => {
       let faveLowerCase = item.name.toLowerCase()
       if(item.isChecked && !map.has(faveLowerCase)) {
-        const newItem = {
-          'name': item.name,
-          'note': '',
-          'id': Math.random().toString(36).substr(2, 9), // unique ID
-        }
-        this.addToList(newItem)
+        this.addToList(item.name)
       } else if (!item.isChecked && map.has(faveLowerCase)) {
         for(var i=0; i < this.state.items.length; i++){
           if (this.state.items[i].name.toLowerCase() === faveLowerCase){
@@ -233,22 +208,35 @@ class App extends Component {
   }
 
   // Acquire grocery item, move item from active to completed list
-  onCompleteItem = (completedItem, groceryList) => {
-    this.removeFromList(groceryList, this.searchForItemInList(completedItem, groceryList))
-    this.setState({completedItems: this.state.completedItems.concat(completedItem)}); 
-    // When completing item, increment count for matched element the default groceries list
-    // The cound helps determine the favorite items
-    groceriesTemplate.map((el, i) => {
-      if (el.name === completedItem.name) {
-        el.count ++
-      }
-      return groceriesTemplate
+  onCompleteItem = (completedItem) => {
+    fetch('http://localhost:3000/completeitem', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        item: completedItem,
+      })
     })
+    .then(response => response.json())
+    .then(response => {
+      this.removeFromList('items', this.searchForItemInList(response, 'items'))
+      this.setState({completedItems: this.state.completedItems.concat(response)})
+    }); 
   }
 
   // Fully delete item from whichever list it is in 
   onDeleteItem = (deletedItem, list) => {
-    this.removeFromList(list, this.searchForItemInList(deletedItem, list) )
+    fetch('http://localhost:3000/deleteitem', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        item: deletedItem,
+        list: list
+      })
+    })
+      .then(response => response.json())
+      .then(response => 
+        this.removeFromList(response.list, this.searchForItemInList(response.item, response.list))
+      )
   }
 
   // Readd item from completed list to grocery list
