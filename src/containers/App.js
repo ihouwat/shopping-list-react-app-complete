@@ -61,7 +61,6 @@ class App extends Component {
     this.onDeleteItem = this.onDeleteItem.bind(this);
     this.onRecoverItem = this.onRecoverItem.bind(this);
     this.addToList = this.addToList.bind(this);
-    this.removeFromList = this.removeFromList.bind(this);
     this.modalClose = this.modalClose.bind(this);
     this.modalOpen = this.modalOpen.bind(this);
     this.onCloseAutocomplete = this.onCloseAutocomplete.bind(this);
@@ -92,24 +91,12 @@ class App extends Component {
     .then(response => this.setState({items: response}))
   }
 
-  // Helper method to remove item from list
-  // Index argument received from searchForItemInList() method
-  removeFromList = (list, index) => {
-    if(list === "items") {
-      this.state.items.splice( index, 1 );
-      this.setState({items: this.state.items});
-    } else {
-      this.state.completedItems.splice( index, 1 );
-      this.setState({completedItems: this.state.completedItems});
-    }
-  }
-
   // Listen to search area input for the searchform component
   onFormChange = (event) => {
     this.setState({formField: event.target.value})
   }
 
-  // When selecting item from autocomplete, add grocery item
+  // When selecting item from autocomplete, add grocery item and clear form
   onChangeAutocomplete = (event, value, reason) => {
     // If selected value null, nothing happens
     if (reason === "blur") {
@@ -151,13 +138,7 @@ class App extends Component {
     if (this.state.formField === '') {
       return;
     }
-    // Create new object from entered item
-    const newItem = {
-      'name': this.state.formField.charAt(0).toUpperCase(0) + this.state.formField.slice(1),
-      'note': '',
-      'id': Math.random().toString(36).substr(2, 9), // unique ID
-    } 
-    this.addToList(newItem)
+    this.addToList(this.state.formField.charAt(0).toUpperCase(0) + this.state.formField.slice(1))
     this.setState({formField: ''})
   }
 
@@ -166,27 +147,19 @@ class App extends Component {
   // Adds/deletes items to the list
   faveCheckChildElement = (event) => {
     let favoriteItems = this.state.favoriteItems
-    let stateItems = this.state.items;
-    let map = new Set(stateItems.map(el=>el.name.toLowerCase()));
+    let stateItems = new Set(this.state.items.map(el=>el.name.toLowerCase()));
     //Toggle checkbox
     favoriteItems.forEach(item => {
       if (item.name === event.target.value)
       item.isChecked =  event.target.checked
     })
-    
     //Search grocery list and add/remove items accordingly
     favoriteItems.forEach(item => {
       let faveLowerCase = item.name.toLowerCase()
-      if(item.isChecked && !map.has(faveLowerCase)) {
+      if(item.isChecked && !stateItems.has(faveLowerCase)) {
         this.addToList(item.name)
-      } else if (!item.isChecked && map.has(faveLowerCase)) {
-        for(var i=0; i < this.state.items.length; i++){
-          if (this.state.items[i].name.toLowerCase() === faveLowerCase){
-            var stateCopy = Object.assign({}, this.state);
-            stateCopy.items[i] = Object.assign({}, stateCopy.items[i]);
-            this.removeFromList('items', i)
-          }
-        } 
+      } else if (!item.isChecked && stateItems.has(faveLowerCase)) {
+        this.onDeleteItem(item.name, 'items')
       }
     }) 
   }
@@ -271,19 +244,21 @@ class App extends Component {
 
    // Modal open method for grocery list component
    // For adding notes to grocery list item
-   modalOpen = (item, list) => {
-     // Search list and return match at index
-     for(var i=0; i < this.state.items.length; i++){
-       if (this.state.items[i].name === item.name){
-        var stateCopy = Object.assign({}, this.state);
-        stateCopy.items[i] = Object.assign({}, stateCopy.items[i]);
-        stateCopy.items[i].note = this.state.items[i].note;
-        this.setState(stateCopy);
-        this.setState({modalItemName: stateCopy.items[i].name})
-        this.setState({itemNotes: stateCopy.items[i].note})
-      }
-    } 
-    this.setState({modalIsOpen: true});
+   modalOpen = (item) => {
+    fetch('http://localhost:3000/openmodal',{
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        item: item
+      })
+    })
+      .then(response => response.json())
+      .then(response => 
+        this.setState({
+          modalItemName: response.modalItemName,
+          itemNotes: response.itemNotes,
+          modalIsOpen: true
+        }))
    };
  
     // Modal close method for grocery list component
@@ -299,7 +274,11 @@ class App extends Component {
     })
     .then(response => response.json())
     .then(response => this.setState({items: response.items}))
-    .then(this.setState({modalIsOpen: false})); // Close modal
+    .then(this.setState({
+      modalIsOpen: false,
+      itemNotes: '',
+      modalItemName: ''
+    })); // Close modal
   };
 
   // Category menu handle to change category or grocery store

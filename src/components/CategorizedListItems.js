@@ -111,7 +111,9 @@ const CategorizedListItems = ({ category, modalItemName, itemNotes, groceryItems
         let uncategorizedIndex = copiedStore.storeCategories.find(category => category.category === 'Uncategorized Items')
         // Add new key-value pair to item. This triggers the fireUncategorizedSnackbar() method in App.js
         // This leads to a snackbar popping up to warn the user the added item is uncategorized
-        tempList[item]['activatedSnackbarOnce'] = true;
+        if(!tempList[item]['activatedSnackbarOnce'] || tempList[item]['activatedSnackbarOnce'] !== 'fired once'){
+          tempList[item]['activatedSnackbarOnce'] = true;
+        }
         // Push items to the "Uncategorized Items" index
         uncategorizedIndex.items.push(tempList[item])
       }

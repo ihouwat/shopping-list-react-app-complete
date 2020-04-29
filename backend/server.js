@@ -106,6 +106,10 @@ app.put('/completeitem', (req, res) => {
   item = req.body.item
   itemName = req.body.item.name
   try {
+    // Remove snackbar functionality once item has been completed
+    if (item.activatedSnackbarOnce) {
+      item["activatedSnackbarOnce"] = 'fired once'
+    }
     // Push item to completed items list
     db.completedItems.push(item)
     // Filter item out of items list
@@ -218,6 +222,21 @@ app.put('/addnote', (req, res) => {
   }
 })
 
+// Send modal item on open modal
+app.post('/openmodal', (req, res) => {
+  itemName = req.body.item.name
+  try {
+    let itemIndex = db.items.findIndex(item => item.name === itemName)
+    res.json({
+      modalItemName: db.items[itemIndex].name,
+      itemNotes: db.items[itemIndex].note
+    })
+  }
+  catch(error) {
+    res.status(400).json('could not fetch item note')
+  }
+})
+
 app.listen(port, () => console.log(`app is running http://localhost:${port}`))
 
 /* ROUTES to build
@@ -229,6 +248,5 @@ app.listen(port, () => console.log(`app is running http://localhost:${port}`))
 /DONE Recover item --> DELETE = from completed items & PUT items
 /DONE Recover all items --> Recover all items from completed list to items list 
 /DONE Add note --> Add note on modal in items list
-
-/ Fetch item on modal open
+/DONE Fetch item on modal open
 */
