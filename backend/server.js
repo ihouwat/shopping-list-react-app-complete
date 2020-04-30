@@ -1,6 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const cors = require('cors');
+const sortedFaves = require('./controllers/sortedFaves');
+const firstLoad = require('./controllers/firstLoad');
+const additem = require('./controllers/addItem');
+const completeitem = require('./controllers/completeItem');
+const deleteitem = require('./controllers/deleteItem');
 
 const db =  {
   groceriesTemplate: [
@@ -36,126 +41,11 @@ app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 const port = 3000;
 
-//Middleware to sort incoming favorites
-const sortedFaves = function (req, res, next) {
- //Helper method to sort groceries by count
- let sortFavorites = (a, b) => {
-  const itemA = a.count;
-  const itemB = b.count;
-  let comparison = 0;
-  if (itemA < itemB) {
-    comparison = 1;
-  } else if (itemA > itemB) {
-    comparison = -1;
-  }
-  return comparison
-  }
-  // Get top ten grocery items by count.
-  // Count number is historical record of how many times each item has been bought
-  const sortTopTenFavorites = db.groceriesTemplate.sort(sortFavorites).slice(0,10)
-  // Create a new array
-  const topTenFavorites = []
-  // For each topTen, create an object and push into favoritesState
-  for (let index in sortTopTenFavorites){
-    topTenFavorites.push({
-      // Grocery name
-      name: sortTopTenFavorites[index].name,
-      // isChecked is false, when it is checked in TopNavigationFaves, it becomes tru
-      isChecked: false,
-    });
-  }
-  req.topTenFavorites = topTenFavorites
-  next()
-}
-
-app.use(sortedFaves)
-
-
-// Get lists
-app.get('/', (req, res) => {
-  try {
-    res.send({
-      topTenFavorites: req.topTenFavorites,
-      items: db.items,
-      completedItems: db.completedItems,
-    })
-  }
-  catch (err) {
-    res.status(400).json('could not GET lists');
-  }
-});
-
-// Add item to grocery list
-app.put('/additem', (req, res) => {
-  item = req.body
-  try {
-    db.items.push({
-    name: item.name,
-    note: '',
-    id: Math.random().toString(36).substr(2, 9), // unique ID
-    })
-    res.json(db.items)
-  }
-  catch(err) {
-    res.status(400).json('could not add item');
-  }
-});
-
-// Complete item from grocery list
-app.put('/completeitem', (req, res) => {
-  item = req.body.item
-  itemName = req.body.item.name
-  try {
-    // Remove snackbar functionality once item has been completed
-    if (item.activatedSnackbarOnce) {
-      item["activatedSnackbarOnce"] = 'fired once'
-    }
-    // Push item to completed items list
-    db.completedItems.push(item)
-    // Filter item out of items list
-    db.items.splice(db.items.findIndex(item => item.name === itemName), 1)
-    // Find item index in groceriesTemplate array
-    const templateIndex = db.groceriesTemplate.findIndex(item => item.name === itemName)
-    // Increment count of item in groceries Template array (useful for loading favorites)
-    if(templateIndex !== -1) {
-      console.log('in grocery list')
-      db.groceriesTemplate[templateIndex].count ++
-    } else {
-      console.log('not in grocery list')
-      // If item not in groceriesTemplate, push it and increment count to 1
-      db.groceriesTemplate.push({
-        name: item.name,
-        count: 1,
-      })
-    }
-    console.log(db.groceriesTemplate)
-    res.json({
-      items: db.items,
-      completedItems: db.completedItems,
-    })
-  }
-  catch(err) {
-    res.status(400).json('could not complete getting item');
-  }
-});
-
-// Delete item from list
-app.put('/deleteitem', (req, res) => {
-  item = req.body.item
-  itemName = item.name
-  try {
-    listName = req.body.listName
-    listName === 'items' ? dbList = db.items : dbList = db.completedItems
-    dbList.splice(dbList.findIndex(item => item.name === itemName), 1)
-    res.json({
-      listName: listName,
-      updatedList: dbList,
-    })
-  }
-  catch (err) {
-    res.status(400).json('could not delete item');
-  }
-})
+app.use((req, res, next) => {sortedFaves.sortedFaves(req,res, db), next()}) //Middleware to sort incoming favorites and pass on to '/' GET request
+app.get('/', (req, res) => {firstLoad.loadSession(req, res, db)}); // Get lists
+app.put('/additem', (req, res) => {additem.handleAddItem(req,res,db)}) // Add item to grocery list
+app.put('/completeitem', (req, res) => {completeitem.handleCompleteItem(req,res,db)}) // Complete item from grocery list
+app.put('/deleteitem', (req, res) => {deleteitem.handleDeleteItem(req,res,db)}) // Delete item from list
 
 // Recover item from completed list to grocery list
 app.put('/recoveritem', (req, res) => {
