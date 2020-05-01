@@ -72,11 +72,12 @@ class App extends Component {
   componentDidMount () {
     fetch('http://localhost:3000/')
     .then(response => response.json())
+    // .then(response => console.log(response))
     .then(response => 
       this.setState({
-        items: response.items,
         completedItems: response.completedItems,
         favoriteItems: response.topTenFavorites,
+        items: response.items,
       }))
   }
 
