@@ -31,7 +31,7 @@ const port = 3000;
 
 // app.use((req, res, next) => {sortedFaves.sortedFaves(req, res, db), next()}) //Middleware to sort incoming favorites and pass on to '/' GET request
 app.get('/', (req, res) => {getitems.getItemsOnLoad(req, res, db)}); // Get lists
-app.put('/additem', (req, res) => {additem.handleAddItem(req, res, db)}) // Add item to grocery list
+app.post('/additem', (req, res) => {additem.handleAddItem(req, res, db)}) // Add item to grocery list
 app.put('/completeitem', (req, res) => {completeitem.handleCompleteItem(req, res ,db)}) // Complete item from grocery list
 app.put('/deleteitem', (req, res) => {deleteitem.handleDeleteItem(req, res ,db)}) // Delete item from list
 app.put('/recoveritem', (req, res) => {recoveritem.handleRecoverItem(req, res, db)}) // Recover item from completed list to grocery list

@@ -72,24 +72,23 @@ class App extends Component {
   componentDidMount () {
     fetch('http://localhost:3000/')
     .then(response => response.json())
-    // .then(response => console.log(response))
     .then(response => 
       this.setState({
-        completedItems: response.completedItems,
-        favoriteItems: response.topTenFavorites,
         items: response.items,
+        completedItems: response.completedItems,
+        favoriteItems: response.favoriteItems,
       }))
   }
 
   // Generic add grocery method
   addToList = (item) => {
     fetch('http://localhost:3000/additem', {
-      method: 'PUT',
+      method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({name: item})
     })
     .then(response => response.json())
-    .then(response => this.setState({items: response}))
+    .then(response => this.setState({items: response.items}))
   }
 
   // Listen to search area input for the searchform component
