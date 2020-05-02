@@ -17,9 +17,7 @@ const getItemsOnLoad = (req, res, db) => {
           });
         })
       });
-  }).catch(function(error) {
-      res.status(400).json('could not GET lists')
-  });
+  }).catch(err => res.status(400).json('could not GET lists'))
 };
 
 module.exports = {

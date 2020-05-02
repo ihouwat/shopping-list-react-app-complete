@@ -1,15 +1,13 @@
 const handleOpenModal = (req, res, db) => {
-  itemName = req.body.item.name
-  try {
-    let itemIndex = db.items.findIndex(item => item.name === itemName)
+  const { name, id, note } = req.body.item
+  db.select().from('items').where('id', '=', id).update('note', note).returning('*')
+  .then(item => {
     res.json({
-      modalItemName: db.items[itemIndex].name,
-      itemNotes: db.items[itemIndex].note
+      modalItemName: item[0].name,
+      itemNotes: item[0].note
     })
-  }
-  catch(error) {
-    res.status(400).json('could not fetch item note')
-  }
+  })
+  .catch(err => res.status(400).json('could not fetch item note to open modal'))
 }
 
 module.exports = {

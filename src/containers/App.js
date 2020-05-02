@@ -185,7 +185,7 @@ class App extends Component {
   // Fully delete item from whichever list it is in 
   onDeleteItem = (deletedItem, listName) => {
     fetch('http://localhost:3000/deleteitem', {
-      method: 'PUT',
+      method: 'DELETE',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         item: deletedItem,
@@ -220,11 +220,11 @@ class App extends Component {
   // Remove all completed items from completed List
   onDeleteAllCompleted = () => {
     fetch('http://localhost:3000/deleteallcompleted',{
-      method: 'PUT',
+      method: 'DELETE',
       headers: {'Content-Type': 'application/json'},
     })
     .then(response => response.json())
-    .then(response => this.setState({completedItems: response}))
+    .then(response => this.setState({completedItems: response.completeditems}))
   }
 
     // Readd all completed items to grocery list

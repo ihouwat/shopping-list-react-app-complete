@@ -1,17 +1,14 @@
 const handleAddNote = (req, res, db) => {
-  ItemName = req.body.itemName
-  note = req.body.note
-  try {
-    //Find index of item in grocery list
-    const itemIndex = db.items.findIndex(item => item.name === ItemName)
-    db.items[itemIndex].note = note
-    res.json({
-      items: db.items,
+  const itemName = req.body.itemName
+  const note = req.body.note
+  db.select().from('items').where('name', '=', itemName).update('note', note).returning('*')
+  .then(resp => {
+    db.select().from('items')
+    .then(items => {
+      res.json ({items: items})
     })
-  }
-  catch(error) {
-    res.status(400).json('could not add note to item')
-  }
+  })
+  .catch(err => res.status(400).json('could not add note to item'))
 }
 
 module.exports = {

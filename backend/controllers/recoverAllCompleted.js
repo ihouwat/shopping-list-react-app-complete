@@ -1,18 +1,30 @@
 const handleRecoverAllCompleted = (req, res, db) => {
-  try {
-    // Push all completed items back to items list
-    db.completedItems.forEach(item => db.items.push(item))
-    // Empty completed items list
-    db.completedItems = []
-    res.json({
-      items: db.items,
-      completedItems: db.completedItems
-    })
+  // Find all items in completed list
+    db.select().from('completeditems')
+    .then(items => {
+      // Add all items to grocery list
+      return db('items').insert(items).returning('*')
+      })
+      .then(items => {
+        // Delete all items in completed list
+        return db('completeditems').del().returning('*')
+        .then(completeditems => {
+          // Get completed list
+          return db('completeditems')
+            .then(completeditems => {
+              return db('items') 
+                .then(items => {
+                //Send to front end
+                res.json({
+                  items: items,
+                  completedItems: completeditems
+                })
+              })
+            })
+          })
+      })
+    .catch(err => res.status(400).json('could not recover all completed items'))
   }
-  catch(error) {
-    res.status(400).json('could not recover all completed items')
-  }
-}
 
 module.exports = {
   handleRecoverAllCompleted

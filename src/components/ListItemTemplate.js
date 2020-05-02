@@ -94,7 +94,7 @@ const ListItemTemplate = ({index, item, modalClose, modalItemName, modalOpen, de
                 variant = "filled"
                 rows="2"
                 fullWidth
-                value={itemNotes}
+                value={ itemNotes }
                 placeholder="Enter note"
                 onChange={ onAddNote }
                 aria-describedby="standard-weight-helper-text"
