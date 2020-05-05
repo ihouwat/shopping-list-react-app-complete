@@ -1,8 +1,10 @@
 const handleOpenModal = (req, res, db) => {
-  const { name, id, note } = req.body.item
-  db.select().from('items').where('id', '=', id).update('note', note).returning('*')
+  const { id } = req.body.item
+  // Find item in database
+  db.select().from('items').where('id', '=', id).returning('*')
   .then(item => {
     res.json({
+      // Return the item name and corresponding note to the frontend
       modalItemName: item[0].name,
       itemNotes: item[0].note
     })

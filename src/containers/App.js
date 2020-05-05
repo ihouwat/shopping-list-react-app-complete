@@ -47,11 +47,12 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      items: [], // populated from back-end, see componentDidMount method
+      completedItems: [], // populated from back-end, see componentDidMount method
+      favoriteItems: [], // populated from back-end, see componentDidMount method
+      groceriesTemplate: [], // populated from back-end, see componentDidMount method
       formField: '',
-      items: [],
-      completedItems: [],
       category: 'Fresh Thyme',
-      favoriteItems: [], // This is populated from back-end, see componentDidMount method
       modalIsOpen: false,
       modalItemName: '',
       itemNotes: '',
@@ -77,6 +78,7 @@ class App extends Component {
         items: response.items,
         completedItems: response.completedItems,
         favoriteItems: response.favoriteItems,
+        groceriesTemplate: response.groceriesTemplate
       }))
   }
 
@@ -288,7 +290,7 @@ class App extends Component {
 
   // Render
   render () {
-    const { autocompleteIsOpen, category, modalItemName, favoriteItems, formField, items, completedItems, itemNotes, modalIsOpen } = this.state;
+    const { autocompleteIsOpen, category, modalItemName, favoriteItems, formField, items, completedItems, itemNotes, modalIsOpen, groceriesTemplate } = this.state;
     return (
       <div className="App">
         <ErrorBoundary>
@@ -313,6 +315,7 @@ class App extends Component {
                   formChange = {this.onFormChange}
                   formSubmit = {this.onFormSubmit}
                   formField = {formField}
+                  groceriesTemplate = {groceriesTemplate}
                   autocompleteSelectValue = {this.onAutocompleteSelectValue}
                   closeAutocomplete = {this.onCloseAutocomplete}
                   checkFormField = {this.autocompleteCheckFormField}

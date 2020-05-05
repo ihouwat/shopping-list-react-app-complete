@@ -2,7 +2,6 @@
 import React, { Fragment } from 'react';
 import {TextField, makeStyles} from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { groceriesTemplate } from '../constants/groceriesTemplate';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -15,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SearchArea = ({ formChange,  formSubmit, formField, changeAutocomplete, closeAutocomplete, autocompleteIsOpen, checkFormField }) => {
+const SearchArea = ({ formChange,  formSubmit, formField, changeAutocomplete, closeAutocomplete, autocompleteIsOpen, checkFormField, groceriesTemplate }) => {
   const classes = useStyles();
   return (
     <Fragment>
