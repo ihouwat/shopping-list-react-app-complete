@@ -1,6 +1,29 @@
 name,count
+Cauliflower,0
+Celery,0
 Corn,0
 Cucumbers,0
+Banana,0
+Blueberries,0
+Black Beans,0
+Cliff Bars,8
+Cereal Bars,2
+Flax Seed,3
+Grapes,5
+Apple,1
+Oranges,2
+Asparagus,0
+Broccoli,0
+Carrots,0
+Clementines,5
+Oatmeal,5
+Hummus,7
+Coffee,10
+Apples,10
+Chocolate Chips,10
+Almonds,10
+Orange Juice,10
+Bananas,10
 Lettuce,0
 Greens,0
 Mushrooms,0
@@ -23,7 +46,6 @@ Peaches,0
 Nectarines,0
 Pears,0
 Plums,0
-Bagels,0
 Bagels,0
 Chip dip,0
 English muffins,0
@@ -106,7 +128,6 @@ Cat litter,0
 Cat food / Treats,0
 Beer,0
 Club soda / Tonic,0
-Tuna,0
 Baby stuff,0
 Baby food,0
 Diapers,0
@@ -138,7 +159,6 @@ Yogurt,0
 Cheese,0
 Bleu cheese,0
 Cheddar,0
-Cottage cheese,0
 Cream cheese,0
 Feta,0
 Goat cheese,0
@@ -152,9 +172,7 @@ Sausage,0
 Meat,0
 Bacon,0
 Beef,0
-Chicken,0
 Ground beef ,0
-Turkey,0
 Ham,0
 Pork,0
 Hot dogs,0
@@ -165,14 +183,11 @@ Dried fruit,0
 Granola bars,0
 Granola mix,0
 Nuts,0
-Oatmeal,0
 Popcorn,0
 Chips,0
 Pretzels,0
-Bagels,0
 Croissants,0
 Buns / Rolls,0
-Cookies,0
 Donuts,0
 Bread ,0
 Pita bread,0
