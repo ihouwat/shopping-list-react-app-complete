@@ -80,6 +80,11 @@ class App extends Component {
         favoriteItems: response.favoriteItems,
         groceriesTemplate: response.groceriesTemplate
       }))
+
+    // Local storage to toggle light/dark theme
+    const myStorage = window.localStorage;
+    myStorage.setItem('theme', 'light')
+    console.log(myStorage.getItem('theme'))
   }
 
   // Generic add grocery method
