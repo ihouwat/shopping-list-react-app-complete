@@ -1,0 +1,10 @@
+h1.App-title {
+  font-size: inherit;
+  font-family: 'Baloo Bhaina 2', 'cursive';
+}
+
+@media (max-width: 350px) {
+  h1.App-title {
+    font-size: 18px;
+  }
+}

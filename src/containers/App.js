@@ -8,45 +8,29 @@ import EmptyList from '../components/EmptyList';
 import TopNavigation from '../components/TopNavigation';
 import TopNavigationTitle from '../components/TopNavigationTitle';
 import TopNavigationCategoryDisplay from '../components/TopNavigationCategoryDisplay';
-import TopNavigationToggleDarkMode from '../components/TopNavigationToggleDarkMode';
+import TopNavigationToggleDarkTheme from '../components/TopNavigationToggleDarkTheme';
 import TopNavigationFaves from '../components/TopNavigationFaves';
 import FixedScroll from '../components/FixedScroll';
-import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorBoundary from './ErrorBoundary';
+import LoadingScreen from '../components/LoadingScreen';
 // Import Material Design UI Custom Theme API
-import {  Box } from '@material-ui/core';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {  Box, withStyles } from '@material-ui/core';
 
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: ["'Telex'", 'sans-serif'].join(','),
+const styles = theme => ({
+  app: {
+    background: theme.palette.background.appBackground,
+    textAlign: 'center',
+    height: '100%',
   },
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#0040cb',
-      light: '#e7e9fa',
-      // dark: '#002bb3',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#cb0040',
-      light: '#fce2e7',
-      dark: '#a3003c',
-      contrastText: '#fff'
-    },
-    text: {
-      primary: 'rgba(0, 0, 0, 0.87)',
-      secondary: 'rgba(0, 0, 0, 0.70)',
-      disabled: 'rgba(0, 0, 0, 0.38)',
-      hint: 'rgba(0, 0, 0, 0.38)'
-    },
+  groceriesContainer: {
+    background: theme.palette.background.paper,
+    borderBottom: '1px solid #dadce0',
   },
-  spacing: 8,
-});
+})
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       appIsLoading: true,
       items: [], // populated from back-end, see componentDidMount method
@@ -59,7 +43,6 @@ class App extends Component {
       modalItemName: '',
       itemNotes: '',
       autocompleteIsOpen: false,
-      mode: 'light', // Toggles light and dark mode
     }
     this.onCompleteItem = this.onCompleteItem.bind(this);
     this.onDeleteItem = this.onDeleteItem.bind(this);
@@ -82,8 +65,7 @@ class App extends Component {
         completedItems: response.completedItems,
         favoriteItems: response.favoriteItems,
         groceriesTemplate: response.groceriesTemplate,
-        category: window.localStorage.getItem('category'),
-        mode: window.localStorage.getItem('theme'),
+        category: window.localStorage.getItem('category') || 'Order Entered',
         appIsLoading: false,
       }))
   }
@@ -296,93 +278,78 @@ class App extends Component {
     // Data is saved across browser sessions
     window.localStorage.setItem('category', `${route}`)
   }
-
-  // Toggling between light and dark mode
-  onToggleScreenMode = () => {
-    var currentMode = this.state.mode
-    if(currentMode === 'light') {
-      this.setState({mode: 'dark'})
-    } else {
-      this.setState({mode: 'light'})
-    }
-    window.localStorage.setItem('theme', this.state.mode)
-    console.log(this.state.mode, window.localStorage)
-  }
-
+  
   // Render
   render () {
+    const { classes } = this.props;
     const { autocompleteIsOpen, category, modalItemName, favoriteItems, 
       formField, items, completedItems, itemNotes, 
       modalIsOpen, groceriesTemplate, appIsLoading } = this.state;
     return (
-      <ThemeProvider theme={theme}>
-        <div className="App">
-        <ErrorBoundary>
-            {appIsLoading === true 
-            ? <h1>Loading</h1>
-            : <>
-              <FixedScroll>
-                <TopNavigation>
-                  <TopNavigationTitle/>
-                  <TopNavigationToggleDarkMode 
-                    toggleScreenMode = {this.onToggleScreenMode}
-                  />
-                  <TopNavigationCategoryDisplay 
-                    category = {category}
-                    onCategoryChange = {this.onCategoryChange}
-                  />
-                  <TopNavigationFaves 
-                    items = {items}
-                    favoriteItems = {favoriteItems}
-                    faveCheckChildElement = {this.faveCheckChildElement}
-                  />
-                </TopNavigation>
-              </FixedScroll>
-              <Box className={'Padding-box'}>
-                <Box className={'Groceries-container'}>
-                  <SearchArea
-                    formChange = {this.onFormChange}
-                    formSubmit = {this.onFormSubmit}
-                    formField = {formField}
-                    groceriesTemplate = {groceriesTemplate}
-                    autocompleteSelectValue = {this.onAutocompleteSelectValue}
-                    closeAutocomplete = {this.onCloseAutocomplete}
-                    checkFormField = {this.autocompleteCheckFormField}
-                    autocompleteIsOpen = {autocompleteIsOpen}
-                    changeAutocomplete = {this.onChangeAutocomplete}
-                  />
-                  <GroceryLists 
-                    category = { category }
-                    itemNotes = { itemNotes }
-                    modalIsOpen = { modalIsOpen }
-                    modalItemName  = { modalItemName }
-                    modalClose = { this.modalClose }
-                    modalOpen = { this.modalOpen }
-                    onAddNote = { this.onAddNote }
-                    groceryItems = { items } 
-                    completeItem = {this.onCompleteItem}
-                    deleteItem = {this.onDeleteItem}
-                    items = {items}
-                  />
+       <div className={classes.app}>
+          <ErrorBoundary>
+              {appIsLoading === true 
+              ? <LoadingScreen />
+              : <>
+                <FixedScroll>
+                  <TopNavigation>
+                    <TopNavigationTitle/>
+                    <TopNavigationToggleDarkTheme/>
+                    <TopNavigationCategoryDisplay 
+                      category = {category}
+                      onCategoryChange = {this.onCategoryChange}
+                    />
+                    <TopNavigationFaves 
+                      items = {items}
+                      favoriteItems = {favoriteItems}
+                      faveCheckChildElement = {this.faveCheckChildElement}
+                    />
+                  </TopNavigation>
+                </FixedScroll>
+                <Box className={'Padding-box'}>
+                  <Box className={`${classes.groceriesContainer} Groceries-container` }>
+                    <SearchArea
+                      formChange = {this.onFormChange}
+                      formSubmit = {this.onFormSubmit}
+                      formField = {formField}
+                      groceriesTemplate = {groceriesTemplate}
+                      autocompleteSelectValue = {this.onAutocompleteSelectValue}
+                      closeAutocomplete = {this.onCloseAutocomplete}
+                      checkFormField = {this.autocompleteCheckFormField}
+                      autocompleteIsOpen = {autocompleteIsOpen}
+                      changeAutocomplete = {this.onChangeAutocomplete}
+                    />
+                    <GroceryLists 
+                      category = { category }
+                      itemNotes = { itemNotes }
+                      modalIsOpen = { modalIsOpen }
+                      modalItemName  = { modalItemName }
+                      modalClose = { this.modalClose }
+                      modalOpen = { this.modalOpen }
+                      onAddNote = { this.onAddNote }
+                      groceryItems = { items } 
+                      completeItem = {this.onCompleteItem}
+                      deleteItem = {this.onDeleteItem}
+                      items = {items}
+                    />
+                  </Box>
+                  <Box className={'Completed-container'}>
+                    { items.length === 0 && completedItems.length === 0 && <EmptyList /> }
+                    <CompletedList 
+                      completedItems = { completedItems }
+                      deleteItem = {this.onDeleteItem}
+                      recoverItem = {this.onRecoverItem}
+                      deleteallcompleted = {this.onDeleteAllCompleted}
+                      recoverallcompleted = {this.onRecoverAllCompleted}
+                    />
+                  </Box>
                 </Box>
-                <Box className={'Completed-container'}>
-                  { items.length === 0 && completedItems.length === 0 && <EmptyList /> }
-                  <CompletedList 
-                    completedItems = { completedItems }
-                    deleteItem = {this.onDeleteItem}
-                    recoverItem = {this.onRecoverItem}
-                    deleteallcompleted = {this.onDeleteAllCompleted}
-                    recoverallcompleted = {this.onRecoverAllCompleted}
-                  />
-                </Box>
-              </Box>
-            </>
-            }
-        </ErrorBoundary>
+              </>
+              }
+          </ErrorBoundary>
       </div>
-          </ThemeProvider>
     );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);

@@ -1,23 +1,47 @@
 import { createMuiTheme } from "@material-ui/core";
-import { blue, grey } from "@material-ui/core/colors";
 
-export const LightTheme = createMuiTheme({
+export const lightTheme = createMuiTheme({
+  typography: {
+    fontFamily: ["'Telex'", 'sans-serif'].join(','),
+  },
   palette: {
-    type: "light",
+    type: 'light',
     primary: {
-      main: blue[600],
-      light: blue[50]
+      main: '#0040cb',
+      light: '#e7e9fa',
+      dark: '#002bb3',
+      contrastText: '#fff',
     },
     secondary: {
-      main: grey[400],
-      light: grey[500]
+      main: '#cb0040',
+      light: '#fce2e7',
+      dark: '#a3003c',
+      contrastText: '#fff'
     },
     text: {
-      primary: "#000",
-      secondary: grey[700]
+      primary: 'rgba(0, 0, 0, 0.87)',
+      secondary: 'rgba(0, 0, 0, 0.70)',
+      disabled: 'rgba(0, 0, 0, 0.38)',
+      hint: 'rgba(0, 0, 0, 0.38)'
     },
     background: {
-      default: grey[100]
-    }
-  }
+      appBackground: "#fafafa",
+    },
+  },
+  spacing: 8,
 });
+
+// lightTheme.overrides = {
+//   ...lightTheme.overrides,
+//   MuiIconButton: {
+//       ...lightTheme.MuiButton,
+//       root: {
+//          ...lightTheme.root,
+//           backgroundColor: '#53471f',
+//       },
+//       label: {
+//         ...lightTheme.label,
+//         color: lightTheme.palette.primary.main,
+//       }
+//   },
+// }
