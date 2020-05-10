@@ -4,7 +4,7 @@ import {SvgIcon, Box, withStyles, Typography} from '@material-ui/core';
 
 const styles = theme => ({
   background: {
-    background: theme.palette.primary.dark,
+    background: theme.palette.background.default,
   },
   icon: {
     color: theme.palette.secondary.main,
@@ -12,7 +12,7 @@ const styles = theme => ({
   },
   textDark: {
     marginTop: theme.spacing(3),
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.main,
     fontSize: theme.spacing(3),
     fontWeight: 600,
   },
