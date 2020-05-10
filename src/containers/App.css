@@ -20,12 +20,12 @@
     padding-top: 64px;
   }
   .Groceries-container {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 4px;
+    margin-right: 4px;
     padding-top: 24px;
   }
   .Completed-container {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 4px;
+    margin-right: 4px;
   }
 }

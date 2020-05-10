@@ -7,11 +7,20 @@ export const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
-      main: '#e7e9fa',
-      light: '#fce2e7',
-      dark: '#a3003c',
+      main: '#c3c8f3',
+      light: '#e6e8fa',
+      dark: '#8a94d4',
       contrastText: '#fff'
     },
+    secondary: {
+      main: '#f7b6c3',
+      light: '#fce2e7',
+      dark: '#f1879c',
+    },
+    background: {
+      paper: '#1C2A35', 
+      default: '#17242C',
+    }
   },
   spacing: 8,
 });

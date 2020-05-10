@@ -24,7 +24,9 @@ const styles = theme => ({
   },
   groceriesContainer: {
     background: theme.palette.background.paper,
-    borderBottom: '1px solid #dadce0',
+    borderBottomWidth: '1px',
+    borderBottomStyle: 'solid',
+    borderBottomColor: theme.palette.divider,
   },
 })
 

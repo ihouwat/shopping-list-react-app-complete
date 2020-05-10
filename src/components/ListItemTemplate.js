@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.spacing(1.6),
     color: theme.palette.text.secondary,
   },
+  completedButton: {
+    color: theme.palette.primary.main
+  },
   // Modal styles
   modal: {
     display: 'flex',
@@ -63,8 +66,8 @@ const ListItemTemplate = ({index, item, modalClose, modalItemName, modalOpen, de
           </IconButton>
         </ListItemIcon>
         <ListItemIcon onClick={completeItem.bind(this, item)}>
-          <IconButton aria-label = 'done'>
-            <SvgIcon >
+          <IconButton  aria-label="item acquired">
+            <SvgIcon className={classes.completedButton}>
               <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
             </SvgIcon>
           </IconButton>
