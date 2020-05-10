@@ -3,11 +3,11 @@ import {SvgIcon, Box, makeStyles, Typography} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.dark,
     backgroundColor: theme.palette.primary.light,
     borderRadius: 100,
     padding: theme.spacing(5.5),
-    fontSize: theme.spacing(10),
+    fontSize: theme.spacing(18),
   },
   textDark: {
     display: 'block',

@@ -18,7 +18,7 @@ import {  Box, withStyles } from '@material-ui/core';
 
 const styles = theme => ({
   app: {
-    background: theme.palette.background.appBackground,
+    background: theme.palette.background.default,
     textAlign: 'center',
     height: '100%',
   },

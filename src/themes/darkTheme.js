@@ -12,9 +12,6 @@ export const darkTheme = createMuiTheme({
       dark: '#a3003c',
       contrastText: '#fff'
     },
-    background: {
-      appBackground: "#303030",
-    },
   },
   spacing: 8,
 });

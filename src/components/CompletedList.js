@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   panel: {
     boxShadow: 'none',
-    backgroundColor: theme.palette.background.appBackground,
+    background: theme.palette.background.default,
   },
   boxDisplay: {
     display: "flex",

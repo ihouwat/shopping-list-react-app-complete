@@ -25,7 +25,7 @@ export const lightTheme = createMuiTheme({
       hint: 'rgba(0, 0, 0, 0.38)'
     },
     background: {
-      appBackground: "#fafafa",
+      default: "#fafafa",
     },
   },
   spacing: 8,
