@@ -153,7 +153,7 @@ class App extends Component {
       if(item.isChecked && !stateItems.has(faveLowerCase)) {
         this.addToList(item.name)
       } else if (!item.isChecked && stateItems.has(faveLowerCase)) {
-        this.onDeleteItem(item.name, 'items')
+        this.onDeleteItem(item, 'items')
       }
     }) 
   }
