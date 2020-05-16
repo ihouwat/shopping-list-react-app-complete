@@ -13,6 +13,7 @@ import TopNavigationFaves from '../components/TopNavigationFaves';
 import FixedScroll from '../components/FixedScroll';
 import ErrorBoundary from '../components/ErrorBoundary';
 import LoadingScreen from '../components/LoadingScreen';
+import ReloadingMessage from '../components/ReloadingMessage';
 // Import Material Design UI Custom Theme API
 import {  Box, withStyles } from '@material-ui/core';
 
@@ -34,7 +35,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      appIsLoading: true,
+      appIsLoading: window.sessionStorage.getItem("loadStatus") || "first load",
       items: [], // populated from back-end, see componentDidMount method
       completedItems: [], // populated from back-end, see componentDidMount method
       favoriteItems: [], // populated from back-end, see componentDidMount method
@@ -68,8 +69,9 @@ class App extends Component {
         favoriteItems: response.favoriteItems,
         groceriesTemplate: response.groceriesTemplate,
         category: window.localStorage.getItem('category') || 'Order Entered',
-        appIsLoading: false,
+        appIsLoading: null,
       }))
+      window.sessionStorage.setItem('loadStatus', 'reloading')
   }
 
   // Generic add grocery method
@@ -290,7 +292,7 @@ class App extends Component {
     return (
        <div className={classes.app}>
           <ErrorBoundary>
-              {appIsLoading === true 
+              {appIsLoading === "first load" 
               ? <LoadingScreen />
               : <>
                 <FixedScroll>
@@ -336,7 +338,8 @@ class App extends Component {
                     />
                   </Box>
                   <Box className={'Completed-container'}>
-                    { items.length === 0 && completedItems.length === 0 && <EmptyList /> }
+                    { items.length === 0 && completedItems.length === 0 && appIsLoading !== "reloading" && <EmptyList /> }
+                    { appIsLoading === "reloading" && <ReloadingMessage /> }
                     <CompletedList 
                       completedItems = { completedItems }
                       deleteItem = {this.onDeleteItem}

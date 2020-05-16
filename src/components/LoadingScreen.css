@@ -2,13 +2,11 @@
   position: relative;
   margin: auto;
   display: block;
-  margin-top: 2%;
+  margin-top: 5%;
   width: 600px;
   height: 420px;
   animation-name: load-screen;
   animation-duration: 1.5s;
-  animation-delay: 2s;
-  opacity: 0;
   animation-fill-mode: forwards;
   /* Optional styles to see container */
   /* background: none; */
@@ -25,7 +23,7 @@
   border-radius: 50%;
   width: 20%;
   height: 21%;
-  top: 16.5%;
+  top: 3%;
   left: 25%;
   border-bottom-left-radius: 50% 90%;
   border-bottom-right-radius: 50% 90%;
@@ -187,7 +185,7 @@
   height: 60%;
   width: 25%;
   background: white;
-  top: 30%;
+  top: 16.5%;
   left: 24.5%;
   border-top-right-radius: 110px 200px;
   border-top-left-radius: 55px 200px;
@@ -242,6 +240,7 @@
   animation-duration: 0.4s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
+  bottom: 16.5%;
 }
 
 .right-leg {
@@ -250,7 +249,6 @@
   width: 6.25%;
   background: white;
   left: 38%;
-  bottom: 3%;
   z-index: -2;
   border-top-left-radius: 25px 50px;
   border-top-right-radius: 25px 50px;
@@ -267,7 +265,6 @@
   width: 6.25%;
   background: white;
   left: 29%;
-  bottom: 3%;
   border-top-right-radius: 25px 50px;
   border-top-left-radius: 25px 50px;
   border-bottom-left-radius: 50% 70%;
@@ -307,7 +304,7 @@
   width: 1.75%;
   transform: rotate(105deg);
   left: 56%;
-  top: 48%;
+  top: 34.5%;
 }
 
 .back {
@@ -319,7 +316,7 @@
   width: 1.75%;
   transform: rotate(160deg);
   left: 63.15%;
-  top: 54%;
+  top: 40.5%;
 }
 
 .body-top {
@@ -331,7 +328,7 @@
   width: 1%;
   transform: rotate(91deg);
   left: 74%;
-  top: 48%;
+  top: 34.5%;
 }
 
 .body-front {
@@ -343,7 +340,7 @@
   width: 1.25%;
   transform: rotate(10deg);
   left: 83.5%;
-  top: 64%;
+  top: 50.5%;
 }
 
 .body-bottom {
@@ -355,7 +352,7 @@
   width: 1.25%;
   transform: rotate(88deg);
   left: 74.45%;
-  top: 67.25%;
+  top: 53.75%;
 }
 
 .body-vertical-stripes {
@@ -366,7 +363,7 @@
   background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0 18%, #e6e6e6 14% 20%);
   background-repeat: no-repeat;
   right: 19.25%;
-  bottom: 15.5%;
+  bottom: 29%;
 }
 
 .body-horizontal-stripes {
@@ -378,7 +375,7 @@
   background-size: 95%;
   background-repeat: no-repeat;
   right: 15%;
-  bottom: 22%;
+  bottom: 35.5%;
 }
 
 .body-to-base {
@@ -390,7 +387,7 @@
   width: 1.25%;
   transform: rotate(39deg);
   left: 64.5%;
-  top: 79.5%;
+  top: 66%;
 }
 
 .base-curve {
@@ -401,7 +398,7 @@
   transform: rotate(-20deg);
   border-radius: 50%;
   left: 62.5%;
-  top: 85.45%;
+  top: 71.95%;
 }
 
 .base-bottom {
@@ -412,7 +409,7 @@
   border-top-left-radius: 170% 20%;
   width: 21%;
   left: 64.25%;
-  top: 89.75%;
+  top: 76.25%;
 }
 
 .wheels > div {
@@ -423,7 +420,7 @@
   border: 0.5px solid black;
   padding: 1%;
   border-radius: 50%;
-  top: 90.5%;
+  top: 77%;
   animation-name: wheel-turn;
   animation-duration: 1s;
   animation-iteration-count: infinite;
@@ -461,34 +458,34 @@
 
 .plume-1 {
   width: 5%;
-  top: 93.5%;
+  top: 80%;
   left: 20%;
   animation-duration: 0.75s;
 }
 .plume-2 {
   width: 10%;
-  top: 90%;
+  top: 76.5%;
   left: 20%;
   animation-duration: 1.5s;
   animation-delay: 0.75s;
 }
 .plume-3 {
   width: 8%;
-  top: 95.5%;
+  top: 82%;
   left: 22%;
   animation-duration: 1.25s;
   animation-delay: 0.5s;
 }
 .plume-4 {
   width: 12%;
-  top: 92%;
+  top: 78.5%;
   left: 26%;
   animation-duration: 1.75s;
 }
 
 .plume-5 {
   width: 12%;
-  top: 94%;
+  top: 80.5%;
   left: 26%;
   animation-duration: 6s;
   animation-delay: 0s;
@@ -508,7 +505,7 @@
 .fume-1 {
   width: 1%;
   height: 1.5%;
-  top: 93%;
+  top: 79.5%;
   right: 35%;
   animation-duration: 1s;
 }
@@ -516,7 +513,7 @@
 .fume-2 {
   width: 1.5%;
   height: 2%;
-  top: 93%;
+  top: 79.5%;
   right: 36%;
   animation-duration: 1s;
   animation-delay: 0.5s;
@@ -525,7 +522,7 @@
 .fume-3 {
   width: 1.5%;
   height: 2%;
-  top: 94%;
+  top: 80.5%;
   right: 37%;
   animation-duration: 2s;
 }
@@ -533,7 +530,7 @@
 .fume-4 {
   width: 1%;
   height: 1.5%;
-  top: 94%;
+  top: 80.5%;
   right: 39%;
   animation-duration: 2s; 
   animation-delay: 0.75s;
@@ -542,7 +539,7 @@
 .fume-5 {
   width: 1.5%;
   height: 2%;
-  top: 94%;
+  top: 80.5%;
   right: 34%;
   animation-duration: 3s;
 }
@@ -550,10 +547,20 @@
 .fume-5 {
   width: 1%;
   height: 1.5%;
-  top: 94%;
+  top: 80.5%;
   right: 34.5%;
   animation-duration: 2s;
   animation-delay: 1s;
+}
+
+.text {
+  position: absolute;
+  bottom: 0;
+  width: 75%;
+  left: 12.5%;
+  text-align: center;
+  color: white;
+  font-size: 1.15rem;
 }
 
 
@@ -595,4 +602,16 @@
   30% {opacity: 1;  transform: translate(-250%, -100%);}
   60% {opacity: 0; transform: translate(-450%, 30%);}
   70%, 100% {opacity: 0;}
+}
+
+@media (max-width: 599px) {
+  .container {
+    width: 320px;
+    height: 224px;
+    margin-top: 45%;
+  }
+  .text {
+    font-size: 0.9rem;
+    bottom: -7.5%;
+  }
 }
