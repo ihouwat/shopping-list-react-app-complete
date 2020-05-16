@@ -11,7 +11,7 @@ import TopNavigationCategoryDisplay from '../components/TopNavigationCategoryDis
 import TopNavigationToggleDarkTheme from '../components/TopNavigationToggleDarkTheme';
 import TopNavigationFaves from '../components/TopNavigationFaves';
 import FixedScroll from '../components/FixedScroll';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from '../components/ErrorBoundary';
 import LoadingScreen from '../components/LoadingScreen';
 // Import Material Design UI Custom Theme API
 import {  Box, withStyles } from '@material-ui/core';
