@@ -370,7 +370,7 @@
   position: absolute;
   height: 15%;
   width: 20%;
-  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0 37%, 
+  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0% 37%, 
       #e6e6e6 33% 41%);
   background-size: 95%;
   background-repeat: no-repeat;
