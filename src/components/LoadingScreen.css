@@ -613,3 +613,15 @@
     bottom: -7.5%;
   }
 }
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .container {
+    width: 320px;
+    height: 224px;
+    margin-top: 5%;
+  }
+  .text {
+    font-size: 0.9rem;
+    bottom: -7.5%;
+  }
+}
