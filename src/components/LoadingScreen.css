@@ -228,7 +228,7 @@
   position: absolute;
   height: 75%;
   width: 9%;
-  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0.01px 15%, black 10% 30%);
+  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0.01% 15%, black 10% 30%);
   background-repeat: no-repeat;
   right: -2%;
   top: 10.5%;
@@ -279,7 +279,7 @@
   height: 30%;
   width: 20%;
   transform: rotate(86deg);
-  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0.01px 31%, black 30% 45%);
+  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0.01% 31%, black 30% 45%);
   background-repeat: no-repeat;
   background-position: 0 -2px;
   right: 30%;
@@ -359,7 +359,7 @@
   transform: rotate(90deg);
   height: 24.5%;
   width: 11%;
-  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0.01px 18%, #e6e6e6 14% 20%);
+  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0.01% 18%, #e6e6e6 14% 20%);
   background-repeat: no-repeat;
   right: 19.25%;
   bottom: 29%;
@@ -369,7 +369,7 @@
   position: absolute;
   height: 15%;
   width: 20%;
-  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0.01px 37%, #e6e6e6 33% 41%);
+  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0.01% 37%, #e6e6e6 33% 41%);
   background-size: 95%;
   background-repeat: no-repeat;
   right: 15%;
