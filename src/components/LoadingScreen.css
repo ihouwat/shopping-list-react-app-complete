@@ -228,8 +228,7 @@
   position: absolute;
   height: 75%;
   width: 9%;
-  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0px 15%, 
-      black 10% 30%);
+  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0px 15%, black 10% 30%);
   background-repeat: no-repeat;
   right: -2%;
   top: 10.5%;
@@ -370,8 +369,7 @@
   position: absolute;
   height: 15%;
   width: 20%;
-  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 0px 37%, 
-      #e6e6e6 33% 41%);
+  background: repeating-linear-gradient(rgba(255, 255, 255, 0) 10px 37%, #e6e6e6 33% 41%);
   background-size: 95%;
   background-repeat: no-repeat;
   right: 15%;
