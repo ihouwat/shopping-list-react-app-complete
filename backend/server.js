@@ -10,7 +10,6 @@ const recoveritem = require('./controllers/recoverItem');
 const deleteallcompleted = require('./controllers/deleteAllCompleted');
 const recoverallcompleted = require('./controllers/recoverAllCompleted');
 const addnote = require('./controllers/addNote');
-const openmodal = require('./controllers/openModal');
 
 const db = knex({
   client: 'pg',
@@ -35,7 +34,6 @@ app.delete('/deleteitem', (req, res) => {deleteitem.handleDeleteItem(req, res ,d
 app.put('/recoveritem', (req, res) => {recoveritem.handleRecoverItem(req, res, db)}) // Recover item from completed list to grocery list
 app.delete('/deleteallcompleted', (req, res) => {deleteallcompleted.handleDeleteAllCompleted(req, res, db)}) // Delete all the completed items
 app.put('/recoverallcompleted', (req, res) => {recoverallcompleted.handleRecoverAllCompleted(req, res, db)}) // Recover all the completed items back to grocery list
-app.post('/openmodal', (req, res) => {openmodal.handleOpenModal(req, res, db)}) // Open modal and fetch item name note
 app.put('/addnote', (req, res) => {addnote.handleAddNote(req, res, db)}) // Add note to grocery item on modal close
 
 app.listen(port, () => console.log(`app is running http://localhost:${port}`))
@@ -49,5 +47,4 @@ app.listen(port, () => console.log(`app is running http://localhost:${port}`))
 /DONE Recover item --> DELETE = from completed items & PUT items
 /DONE Recover all items --> Recover all items from completed list to items list 
 /DONE Add note --> Add note on modal in items list
-/DONE Fetch item on modal open
 */

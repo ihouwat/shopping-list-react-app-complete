@@ -42,8 +42,6 @@ class App extends Component {
       groceriesTemplate: [], // populated from back-end, see componentDidMount method
       formField: '',
       category: 'Fresh Thyme',
-      modalIsOpen: false,
-      modalItemName: '',
       itemNotes: '',
       autocompleteIsOpen: false,
     }
@@ -239,41 +237,22 @@ class App extends Component {
    // Modal open method for grocery list component
    // For adding notes to grocery list item
    modalOpen = (item) => {
-    fetch('http://localhost:3000/openmodal',{
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        item: item
-      })
-    })
-      .then(response => response.json())
-      .then(response => 
-        this.setState({
-          modalItemName: response.modalItemName,
-          itemNotes: response.itemNotes,
-          modalIsOpen: true
-        }))
+     this.setState({itemNotes: item.note,})
    };
  
     // Modal close method for grocery list component
     // Saves note to database
    modalClose = (item) => {
-     console.log(item)
     fetch('http://localhost:3000/addnote',{
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        itemName: this.state.modalItemName,
+        id: item.id,
         note: this.state.itemNotes,
       })
     })
     .then(response => response.json())
-    .then(response => this.setState({items: response.items}))
-    .then(this.setState({
-      modalIsOpen: false,
-      itemNotes: '',
-      modalItemName: ''
-    })); // Close modal
+    .then(response => this.setState({items: response.items,}))
   };
 
   // Category menu handle to change category or grocery store
@@ -287,9 +266,9 @@ class App extends Component {
   // Render
   render () {
     const { classes } = this.props;
-    const { autocompleteIsOpen, category, modalItemName, favoriteItems, 
+    const { autocompleteIsOpen, category, favoriteItems, 
       formField, items, completedItems, itemNotes, 
-      modalIsOpen, groceriesTemplate, appIsLoading } = this.state;
+      groceriesTemplate, appIsLoading } = this.state;
     return (
        <div className={classes.app}>
           <ErrorBoundary>
@@ -327,8 +306,6 @@ class App extends Component {
                     <GroceryLists 
                       category = { category }
                       itemNotes = { itemNotes }
-                      modalIsOpen = { modalIsOpen }
-                      modalItemName  = { modalItemName }
                       modalClose = { this.modalClose }
                       modalOpen = { this.modalOpen }
                       onAddNote = { this.onAddNote }

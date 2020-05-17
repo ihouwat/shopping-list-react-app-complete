@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // Import Material Design UI Components
 import { TextField, Typography, Modal, Backdrop, Fade, 
         makeStyles, ListItem, ListItemText, ListItemIcon, 
@@ -46,13 +46,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListItemTemplate = ({index, item, modalClose, modalItemName, modalOpen, deleteItem, completeItem, modalIsOpen, itemNotes, onAddNote}) => {
+const ListItemTemplate = ({index, item, modalClose, modalOpen, deleteItem, completeItem, itemNotes, onAddNote}) => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (item) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  
   const classes = useStyles();
   return (
     <ListItem className={classes.listItem} button key={index}>
         <ListItemText 
           disableTypography
-          onClick={modalOpen.bind(this, item)}
+          onClick={() => {
+            handleOpen(item)
+            modalOpen(item)
+          }}
           className={classes.listItemText} 
         > 
           <Typography className={classes.listItemTextPrimary}>{item.name}</Typography>
@@ -76,18 +90,21 @@ const ListItemTemplate = ({index, item, modalClose, modalItemName, modalOpen, de
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={modalIsOpen}
-        onClose={modalClose}
+        open={open}
+        onClose={() => { 
+          handleClose()
+          modalClose(item)
+        }}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
         }}
       >
-        <Fade in={modalIsOpen}>
+        <Fade in={open} >
           <div className={classes.paper}>
             <Typography variant='h5' paragraph={true} color="textPrimary">
-              {modalItemName}
+              {item.name}
             </Typography>
             <form>
               <TextField

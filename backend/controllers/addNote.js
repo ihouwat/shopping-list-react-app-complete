@@ -1,8 +1,7 @@
 const handleAddNote = (req, res, db) => {
-  const itemName = req.body.itemName
-  const note = req.body.note
+  const {id, note} = req.body
   // Find item in database and add note
-  db.select().from('items').where('name', '=', itemName).update('note', note).returning('*')
+  db.select().from('items').where('id', '=', id).update('note', note).returning('*')
   .then(resp => {
     // Get items list from database
     db.select().from('items')
