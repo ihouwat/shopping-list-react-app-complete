@@ -1,6 +1,35 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Backend
+First set up a local database with the following
+DB name: quickshopper
+Tables: 
+1 - items (+ info here)
+2 - completeditems (+ info here)
+3 - groceriestemplate (+ info here + upload template from constants)
+
+### `cd backend`
+### `npx nodemon server.js`
+
+## Frontend
+### `npm start`
+Instructions to modifying grocery templates on the front-end
+
+## Frontend Technologies Used
+* [create-react-app](https://create-react-app.dev/): To create React application
+* [material-ui](https://material-ui.com/): To create Material Design UI components
+* [gh-pages](https://www.npmjs.com/package/gh-pages): To deploy demo site on GitHub pages
+
+## Backend Technologies Used 
+* [body-parser](https://www.npmjs.com/package/body-parser): Node.js body parsing middleware
+* [cors](https://www.npmjs.com/package/cors): to provide a Connect/Express middleware that can be used to enable CORS
+* [express](https://www.npmjs.com/package/express): To set up server
+* [knex](https://www.npmjs.com/package/knex): A SQL query builder in JavaScript
+* [pg](https://www.npmjs.com/package/pg): PostgreSQL client for Node.js. Uses pure JavaScript
+* [nodemon](https://www.npmjs.com/package/nodemon): A development utility that monitors for any changes in the code and automatically restart the server
+
+
+## Available React Scripts
 
 In the project directory, you can run:
 
@@ -66,8 +95,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-## Technologies Used 
-* [create-react-app](https://create-react-app.dev/): To create React application
-* [material-ui](https://material-ui.com/): To create Material Design UI components
-* [gh-pages](https://www.npmjs.com/package/gh-pages): To deploying demo site on GitHub pages

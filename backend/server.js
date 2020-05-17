@@ -16,7 +16,7 @@ const db = knex({
   connection: {
     host : '127.0.0.1',
     user : 'postgres',
-    password : 'Wisaal83',
+    password : 'YOUR LOCAL DB PASSWORD HERE',
     database : 'quickshopper'
   }
 });
