@@ -1,19 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+We've all gone to a grocery store and found ourselves retracing our steps or revisiting aisles because we missed an item on our hand written list or because some 'generic' shopping app categorized items in a way that doesn't match our store layout. This shopping app allows you to customize your favorite grocery store layouts so you can zip in and out as efficiently as possible.
 
-## Backend
-First set up a local database with the following
-DB name: quickshopper
-Tables: 
-1 - items (+ info here)
-2 - completeditems (+ info here)
-3 - groceriestemplate (+ info here + upload template from constants)
+**Setup**
 
-### `cd backend`
-### `npx nodemon server.js`
+First set up a local PostgreSQL database called, 'quickshopper'. It includes three tables:
 
-## Frontend
-### `npm start`
-Instructions to modifying grocery templates on the front-end
+1. items: corresponds to the list of groceries to buy. It is made of three columns:
+
+a. name (varchar)
+
+b. id(varchar -- primary key)
+
+c. note
+
+2. completeditems: corresponds to the list of completed items. It includes three columns, as above
+
+3. groceriestemplate: serves two functions, to fetch top 10 favorites and to populate the autofill search box. It is made of two columns:
+
+a. name (varchar -- primary key)
+
+b. count (integer -- not null)
+
+In the src / constants folder:
+
+1. Copy the groceriestemplatedb-5-6-2020.csv file to the groceriestemplate table in the database.
+
+2. Modify the groceryStores.js file to include the grocery stores, categories, and store layouts.
+
+**Starting the app**
+
+**cd backend**
+
+**npx nodemon server.js**
+
+Then:
+
+**npm start**
 
 ## Frontend Technologies Used
 * [create-react-app](https://create-react-app.dev/): To create React application
@@ -27,71 +48,3 @@ Instructions to modifying grocery templates on the front-end
 * [knex](https://www.npmjs.com/package/knex): A SQL query builder in JavaScript
 * [pg](https://www.npmjs.com/package/pg): PostgreSQL client for Node.js. Uses pure JavaScript
 * [nodemon](https://www.npmjs.com/package/nodemon): A development utility that monitors for any changes in the code and automatically restart the server
-
-
-## Available React Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
