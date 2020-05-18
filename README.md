@@ -1,40 +1,35 @@
-We've all gone to a grocery store and found ourselves retracing our steps or revisiting aisles because we missed an item on our hand written list or because some 'generic' shopping app categorized items in a way that doesn't match our store layout. This shopping app allows you to customize your favorite grocery store layouts so you can zip in and out as efficiently as possible.
+We've all visited grocery stores and found ourselves retracing our steps or revisiting aisles because we missed an item on our hand written list or because our 'generic' shopping app categorizes items in a way that doesn't match our store layout. This shopping app allows you to customize your favorite grocery store layouts so you can zip in and out as efficiently as possible.
 
-**Setup**
+##Setup
 
-First set up a local PostgreSQL database called, 'quickshopper'. It includes three tables:
+**Database**
+Set up a PostgreSQL database called 'quickshopper' on your local machine. It includes three tables:
 
 1. items: corresponds to the list of groceries to buy. It is made of three columns:
 
-a. name (varchar)
-
-b. id(varchar -- primary key)
-
-c. note
+  a. name (varchar)
+  b. id (varchar -- primary key)
+  c. note
 
 2. completeditems: corresponds to the list of completed items. It includes three columns, as above
 
 3. groceriestemplate: serves two functions, to fetch top 10 favorites and to populate the autofill search box. It is made of two columns:
 
-a. name (varchar -- primary key)
+  a. name (varchar -- primary key)
 
-b. count (integer -- not null)
+  b. count (integer -- not null)
 
+**Customizing app**
 In the src / constants folder:
-
 1. Copy the groceriestemplatedb-5-6-2020.csv file to the groceriestemplate table in the database.
-
 2. Modify the groceryStores.js file to include the grocery stores, categories, and store layouts.
 
-**Starting the app**
+##Starting the app
 
-**cd backend**
-
-**npx nodemon server.js**
-
-Then:
-
-**npm start**
+1. To start the server: 
+`npx nodemon server.js`
+2. To start the frontend:
+`npm start`
 
 ## Frontend Technologies Used
 * [create-react-app](https://create-react-app.dev/): To create React application
