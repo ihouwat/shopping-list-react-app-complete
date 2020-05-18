@@ -1,8 +1,8 @@
+# Quick Shopper
+
 We've all visited grocery stores and found ourselves retracing our steps or revisiting aisles because we missed an item on our hand written list or because our 'generic' shopping app categorizes items in a way that doesn't match our store layout. This shopping app allows you to customize your favorite grocery store layouts so you can zip in and out as efficiently as possible.
 
-## Setup
-
-### Database
+### Setup Database
 
 Create a PostgreSQL database called 'quickshopper' on your local machine. It includes three tables:
 
@@ -22,23 +22,23 @@ Create a PostgreSQL database called 'quickshopper' on your local machine. It inc
 
     b. count (integer - not null)
 
-### Customizing app
+### Customize the app
 
 In the src / constants folder:
 1. Copy the groceriestemplatedb-5-6-2020.csv file to the groceriestemplate table in the database.
 2. Customize the stores array in the groceryStores.js file by modifying the store names, store categories, store orders, and items per category.
 
-## Starting the app
+### Star the app
 
 1. `npx nodemon server.js` starts the server on port 3000
 2. `npm start` starts the frontend
 
-## Frontend Technologies Used
+### Frontend Technologies Used
 * [create-react-app](https://create-react-app.dev/): To create React application
 * [material-ui](https://material-ui.com/): To create Material Design UI components
 * [gh-pages](https://www.npmjs.com/package/gh-pages): To deploy site on GitHub pages
 
-## Backend Technologies Used 
+### Backend Technologies Used 
 * [body-parser](https://www.npmjs.com/package/body-parser): Node.js body parsing middleware
 * [cors](https://www.npmjs.com/package/cors): to provide a Connect/Express middleware that can be used to enable CORS
 * [express](https://www.npmjs.com/package/express): To set up server
