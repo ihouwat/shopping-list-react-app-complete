@@ -1,6 +1,6 @@
 # Quick Shopper
 
-We've all visited grocery stores and found ourselves retracing our steps or revisiting aisles because we missed an item on our hand written list or because our 'generic' shopping app categorizes items in a way that doesn't match our store layout. This shopping app allows you to customize your favorite grocery store layouts so you can zip in and out as efficiently as possible.
+We've all visited grocery stores and found ourselves retracing our steps or revisiting aisles because we missed an item on our hand written list or because our 'generic' shopping app categorizes items in a way that doesn't match our store layout. This progressive web app is a shopping app that allows you to customize your favorite grocery store layouts so you can zip in and out as efficiently as possible.
 
 ## Setup 
 
