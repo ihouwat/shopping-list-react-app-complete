@@ -36,7 +36,7 @@ In the src / constants folder:
 ## Frontend Technologies Used
 * [create-react-app](https://create-react-app.dev/): To create React application
 * [material-ui](https://material-ui.com/): To create Material Design UI components
-* [gh-pages](https://www.npmjs.com/package/gh-pages): To deploy demo site on GitHub pages
+* [gh-pages](https://www.npmjs.com/package/gh-pages): To deploy site on GitHub pages
 
 ## Backend Technologies Used 
 * [body-parser](https://www.npmjs.com/package/body-parser): Node.js body parsing middleware
@@ -44,4 +44,4 @@ In the src / constants folder:
 * [express](https://www.npmjs.com/package/express): To set up server
 * [knex](https://www.npmjs.com/package/knex): A SQL query builder in JavaScript
 * [pg](https://www.npmjs.com/package/pg): PostgreSQL client for Node.js. Uses pure JavaScript
-* [nodemon](https://www.npmjs.com/package/nodemon): A development utility that monitors for any changes in the code and automatically restart the server
+* [nodemon](https://www.npmjs.com/package/nodemon): A development utility that monitors for any changes in the code and automatically restarts the server
