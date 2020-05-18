@@ -2,38 +2,36 @@ We've all visited grocery stores and found ourselves retracing our steps or revi
 
 ## Setup
 
-**Database**
+### Database
 
-Set up a PostgreSQL database called 'quickshopper' on your local machine. It includes three tables:
+Create a PostgreSQL database called 'quickshopper' on your local machine. It includes three tables:
 
-1. **items**: corresponds to the list of groceries to buy. It is made of three columns:
+1. **items**: stores the added grocery items. It includes three columns:
 
     a. name (varchar)
 
-    b. id (varchar -- primary key)
+    b. id (varchar - primary key)
   
-    c. note
+    c. note (varchar)
 
-2. **completeditems**: corresponds to the list of completed items. It includes three columns, as above
+2. **completeditems**: stores the completed items. It includes three columns, same as above.
 
-3. **groceriestemplate**: serves two functions, to fetch top 10 favorites and to populate the autofill search box. It is made of two columns:
+3. **groceriestemplate**: a. is used to fetch top 10 favorites on app load and b. populates the autofill search box. It includes two columns:
 
-    a. name (varchar -- primary key)
+    a. name (varchar - primary key)
 
-    b. count (integer -- not null)
+    b. count (integer - not null)
 
-### **Customizing app**
+### Customizing app
 
 In the src / constants folder:
 1. Copy the groceriestemplatedb-5-6-2020.csv file to the groceriestemplate table in the database.
-2. Modify the groceryStores.js file to include the grocery stores, categories, and store layouts.
+2. Customize the stores array in the groceryStores.js file by modifying the store names, store categories, store orders, and items per category.
 
 ## Starting the app
 
-1. To start the server: 
-`npx nodemon server.js`
-2. To start the frontend:
-`npm start`
+1. `npx nodemon server.js` starts the server on port 3000
+2. `npm start` starts the frontend
 
 ## Frontend Technologies Used
 * [create-react-app](https://create-react-app.dev/): To create React application
