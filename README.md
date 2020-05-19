@@ -20,9 +20,9 @@ Create a PostgreSQL database called 'quickshopper' on your local machine. It inc
 
 3. **groceriestemplate**: a. is used to fetch top 10 favorites on app load and b. populates the autofill search box. It includes two columns:
 
-    a. name (varchar - primary key)
+        a. name (varchar - primary key)
 
-    b. count (integer - not null)
+        b. count (integer - not null)
 
 ### Customize the app
 
