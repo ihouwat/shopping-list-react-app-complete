@@ -8,20 +8,17 @@ We've all visited grocery stores and found ourselves retracing our steps or revi
 
 Create a PostgreSQL database called 'quickshopper' on your local machine. It includes three tables:
 
-1. **items**: stores the added grocery items. It includes three columns:
+* **items**: stores the added grocery items. It includes three columns:
 
-    a. name (varchar)
+    * name (varchar)
+    * id (varchar - primary key)
+    * note (varchar)
 
-    b. id (varchar - primary key)
-  
-    c. note (varchar)
+* **completeditems**: stores the completed items. It includes three columns, same as above.
 
-2. **completeditems**: stores the completed items. It includes three columns, same as above.
-
-3. **groceriestemplate**: a. is used to fetch top 10 favorites on app load and b. populates the autofill search box. It includes two columns:
+* **groceriestemplate**: a. is used to fetch top 10 favorites on app load and b. populates the autofill search box. It includes two columns:
 
     * name (varchar - primary key)
-
     * count (integer - not null)
 
 ### Customize the app
