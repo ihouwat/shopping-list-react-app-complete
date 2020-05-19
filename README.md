@@ -16,7 +16,7 @@ Create a PostgreSQL database called 'quickshopper' on your local machine. It inc
 
 * **completeditems**: stores the completed items. It includes three columns, same as above.
 
-* **groceriestemplate**: a. is used to fetch top 10 favorites on app load and b. populates the autofill search box. It includes two columns:
+* **groceriestemplate**: is used to fetch top 10 favorites on app load and to populate the autocomplete search input. It includes two columns:
 
     * name (varchar - primary key)
     * count (integer - not null)
@@ -37,6 +37,7 @@ Create a PostgreSQL database called 'quickshopper' on your local machine. It inc
 ## App Features
 * Customizable grocery stores and store layouts, in JavaScript
 * Click on list items to add notes
+* Autocomplete search input
 * Fast, accessible progressive web app
 * Top 10 faves list based on usage history 
 * Dark mode, because why not?!
