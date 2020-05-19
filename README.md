@@ -1,6 +1,6 @@
 # Quick Shopper
 
-We've all visited grocery stores and found ourselves retracing our steps or revisiting aisles because we missed an item on our hand written list or because our 'generic' shopping app categorizes items in a way that doesn't match our store layout. This progressive web app is a shopping app that allows you to customize your favorite grocery store layouts so you can zip in and out as efficiently as possible.
+We've all visited grocery stores and found ourselves retracing our steps or revisiting aisles because we missed an item on our hand written list or because our 'generic' shopping app categorizes items in a way that doesn't match our store layout. This progressive web app is a shopping app that allows you to customize your favorite grocery store layouts so you can zip in and out as efficiently as possible. [Check out the demo](https://ihouwat.github.io/shopping-list-react-app-demo/).
 
 ## Setup 
 
@@ -26,7 +26,11 @@ Create a PostgreSQL database called 'quickshopper' on your local machine. It inc
 
 ### Customize the app
 
-In the src / constants folder:
+In the backend folder:
+
+Edit the server credentials, starting on line 14 in the server.js file
+
+In the constants folder:
 1. Copy the groceriestemplatedb-5-6-2020.csv file to the groceriestemplate table in the database.
 2. Customize the stores array in the groceryStores.js file by modifying the store names, store categories, store orders, and items per category.
 
@@ -34,6 +38,15 @@ In the src / constants folder:
 
 1. `npx nodemon server.js` starts the server on port 3000
 2. `npm start` starts the frontend
+
+### Features
+* Customizable stores and layouts in JavaScript
+* Click on list items to add notes
+* Fast, accessible progressive web app
+* Top 10 faves list updates based on usage history 
+* Dark mode (because why not?!)
+* Ready to deploy
+* Cute bear to brighten your day (load the app)
 
 ## Frontend Technologies Used
 * [create-react-app](https://create-react-app.dev/): To create React application
