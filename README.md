@@ -39,7 +39,7 @@ In the constants folder:
 1. `npx nodemon server.js` starts the server on port 3000
 2. `npm start` starts the frontend
 
-### Features
+## Features
 * Customizable stores and layouts in JavaScript
 * Click on list items to add notes
 * Fast, accessible progressive web app
