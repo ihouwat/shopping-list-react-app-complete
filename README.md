@@ -34,7 +34,7 @@ Create a PostgreSQL database called 'quickshopper' on your local machine. It inc
 1. `npx nodemon server.js` starts the server on port 3000
 2. `npm start` starts the frontend
 
-## Features
+## App Features
 * Customizable grocery stores and store layouts, in JavaScript
 * Click on list items to add notes
 * Fast, accessible progressive web app
