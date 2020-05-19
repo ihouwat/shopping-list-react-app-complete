@@ -26,13 +26,11 @@ Create a PostgreSQL database called 'quickshopper' on your local machine. It inc
 
 ### Customize the app
 
-In the backend folder:
+* In `/ backend / server.js`, edit the server credentials, starting on line 14 in the server.js file
 
-Edit the server credentials, starting on line 14 in the server.js file
-
-In the constants folder:
-1. Copy the groceriestemplatedb-5-6-2020.csv file to the groceriestemplate table in the database.
-2. Customize the stores array in the groceryStores.js file by modifying the store names, store categories, store orders, and items per category.
+* In the constants folder:
+    * Copy the groceriestemplatedb-5-6-2020.csv file to the groceriestemplate table in the database.
+    * Customize the stores array in the `groceryStores.js` file by modifying the store names, store categories, store orders, and items per category.
 
 ### Start the app
 
