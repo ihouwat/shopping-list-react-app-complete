@@ -60,7 +60,7 @@ const UncategorizedListItems = ({modalClose, modalItemName, modalOpen, deleteIte
 
  
   return (
-    <List component="li" aria-label="grocery list category" className={classes.list}>
+    <List aria-label="grocery list category" className={classes.list}>
       {listItems}
     </List>
   )

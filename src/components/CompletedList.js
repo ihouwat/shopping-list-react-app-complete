@@ -53,7 +53,7 @@ const CompletedList = ({ completedItems, deleteItem, recoverItem, deleteallcompl
   // Compiling list
   const listItems = completedItems.map((item, index) => {
     return (
-    <ListItem button key={index} className = {classes.listItem}>
+    <ListItem component="li" button key={index} className = {classes.listItem}>
       <ListItemText secondary = {item.name}  />
       <ListItemIcon onClick={deleteItem.bind(this, item, 'completedItems')}>
         <IconButton aria-label="trash item">
@@ -99,7 +99,7 @@ const CompletedList = ({ completedItems, deleteItem, recoverItem, deleteallcompl
           />
         </Box>
         <ExpansionPanelDetails className={classes.details}>
-          <List component="li" aria-label="completed items" className={classes.list}>
+          <List aria-label="completed items" className={classes.list}>
             {listItems}
           </List>
         </ExpansionPanelDetails>

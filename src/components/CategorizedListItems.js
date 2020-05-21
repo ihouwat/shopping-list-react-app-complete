@@ -154,7 +154,7 @@ const CategorizedListItems = ({ category, modalItemName, itemNotes, groceryItems
 })
  
   return (
-    <List component="li" aria-label="grocery list category" className={classes.list}>
+    <List aria-label="grocery list category" className={classes.list}>
       {listItems}
     </List>
   )

@@ -62,7 +62,7 @@ const ListItemTemplate = ({index, item, modalClose, modalOpen, deleteItem, compl
   
   const classes = useStyles();
   return (
-    <ListItem className={classes.listItem} button key={index}>
+    <ListItem component="li" className={classes.listItem} button key={index}>
         <ListItemText 
           disableTypography
           onClick={() => {
