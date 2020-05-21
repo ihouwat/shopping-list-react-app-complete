@@ -39,7 +39,7 @@ const classes = useStyles();
           size='medium'
           color='default'
           aria-haspopup="true"
-          aria-controls="simple-menu"
+          aria-controls="delete-recover-menu"
           aria-label="menu to delete or recover all items"
           onClick={handleClick}
           className={classes.delOrRecoverMenu}
@@ -51,7 +51,7 @@ const classes = useStyles();
           }
         />
         <Menu
-        id="simple-menu"
+        id="delete-recover-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

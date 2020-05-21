@@ -29,7 +29,7 @@ class TopNavigationCategoryDisplay extends Component {
             size='medium'
             aria-label='pick category'
             aria-haspopup="true"
-            aria-controls="simple-menu"
+            aria-controls="category-menu"
             onClick={this.handleClick}
             color='primary'
           >
@@ -38,7 +38,7 @@ class TopNavigationCategoryDisplay extends Component {
             </SvgIcon>
           </IconButton>
         <Menu
-          id="simple-menu"
+          id="category-menu"
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
