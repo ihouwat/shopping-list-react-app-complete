@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
   },
   '@global': {
-    'li > p:nth-of-type(1)': {
+    'ul > p:nth-of-type(1)': {
       borderTop: '0px',
     },
   },
