@@ -8,11 +8,12 @@ We've all visited grocery stores and found ourselves retracing our steps or revi
 
 Create a PostgreSQL database called 'quickshopper' on your local machine. It includes three tables:
 
-* **items**: stores the added grocery items. It includes three columns:
+* **items**: stores the added grocery items. It includes four columns:
 
     * name (varchar)
     * id (varchar - primary key)
     * note (varchar)
+    * count (smallint)
 
 * **completeditems**: stores the completed items. It includes three columns, same as above.
 
